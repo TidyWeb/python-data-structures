@@ -101,30 +101,35 @@
     <p class="thesis">The shape changes when the job changes. Follow one shopping list as it needs names, protection, uniqueness, detail and finally a quick check.</p>
     <div class="connection-story">
       <article>
+        <span class="story-icon brand-mark" aria-hidden="true">[ ]</span>
         <p class="story-step">01 · Start with a list</p>
         <h3>A group in order is enough</h3>
         <code class="story-code">shopping = ["milk", "eggs", "bread"]</code>
         <p>A plain list is enough when all you need is a group of items in order.</p>
       </article>
       <article>
+        <span class="story-icon brand-mark" aria-hidden="true">{ : }</span>
         <p class="story-step">02 · Add quantities</p>
         <h3>The list reaches its limit</h3>
         <code class="story-code">shopping = {"milk": 2, "eggs": 12, "bread": 1}</code>
         <p>A list holds values; a dictionary names them.</p>
       </article>
       <article>
+        <span class="story-icon brand-mark" aria-hidden="true">( · )</span>
         <p class="story-step">03 · Keep last week fixed</p>
         <h3>The finished list should not change</h3>
         <code class="story-code">last_week = ("milk", "eggs", "bread")</code>
         <p>A tuple has the same ordered shape as a list, but it is locked.</p>
       </article>
       <article>
+        <span class="story-icon brand-mark" aria-hidden="true">{ · }</span>
         <p class="story-step">04 · Remove repeats</p>
         <h3>Two weeks overlap</h3>
         <code class="story-code">all_items = {"milk", "eggs", "bread", "cheese"}</code>
         <p>A set combines the items while keeping only what is distinct.</p>
       </article>
       <article>
+        <span class="story-icon-pair" aria-hidden="true"><span class="story-icon brand-mark">{ : }</span><span class="story-icon brand-mark">[ ]</span></span>
         <p class="story-step">05 · Add detail inside detail</p>
         <h3>Dinner needs its own list</h3>
         <code class="story-code">shopping["dinner"] = ["pasta", "tomato sauce", "basil"]</code>
@@ -132,6 +137,7 @@
         <p>Nesting is just one of these shapes holding another.</p>
       </article>
       <article>
+        <span class="story-icon brand-mark" aria-hidden="true">in?</span>
         <p class="story-step">06 · Check what is there</p>
         <h3>Ask one yes-or-no question</h3>
         <code class="story-code">"milk" in shopping</code>
