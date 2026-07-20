@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Nested Lists — Follow the Layers</title>
+  <link rel="stylesheet" href="../assets/lesson-guide.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to lesson</a>
+
+<aside class="rail" aria-label="Lesson navigation">
+  <div class="brand">
+    <a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">[[ ]]</a>
+    <div><p class="eyebrow">Collection · Data structures</p><p class="brand-name">Lesson 07 · Nested lists</p></div>
+  </div>
+  <nav class="section-nav" aria-label="Sections in Lesson 07">
+    <ol>
+      <li><a href="#purpose"><span>01</span> Lists inside lists</a></li>
+      <li><a href="#shape"><span>02</span> See the layers</a></li>
+      <li><a href="#outer"><span>03</span> Read one inner list</a></li>
+      <li><a href="#item"><span>04</span> Read one nested item</a></li>
+      <li><a href="#change"><span>05</span> Change one item</a></li>
+      <li><a href="#deeper"><span>06</span> Follow deeper layers</a></li>
+      <li><a href="#method"><span>07</span> Index-reading method</a></li>
+      <li><a href="#practice"><span>08</span> Timetable exercise</a></li>
+      <li><a href="#traps"><span>09</span> Common traps</a></li>
+      <li><a href="#recall"><span>10</span> Quick recall</a></li>
+    </ol>
+  </nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html" aria-current="page"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note">
+    <p><strong>This page covers nested lists.</strong></p>
+    <p>Its foundation is following one index at a time, from the outside layer towards the value inside.</p>
+  </div>
+</aside>
+
+<main id="content">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Python data structures · visual revision guide</p>
+      <h1>Follow the <em>layers.</em></h1>
+      <p class="lede">A nested list is a list containing other lists. Each pair of square brackets takes one deliberate step into the structure.</p>
+    </div>
+    <div class="hero-index"><strong>3</strong><span>questions for every index</span></div>
+  </header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the organising job</p><h2>A list can hold whole lists</h2></div></div>
+    <p class="thesis">Nested lists group related values into layers. That makes them useful for tables, grids, timetables, seating plans and grouped orders.</p>
+    <div class="two">
+      <article class="card">
+        <p class="card-label">Ordinary list</p>
+        <h3>One level of values</h3>
+        <div class="code-block"><code>subjects = [
+    <span class="code-string">"Maths"</span>,
+    <span class="code-string">"English"</span>,
+    <span class="code-string">"Science"</span>
+]</code></div>
+      </article>
+      <article class="card">
+        <p class="card-label">Nested list</p>
+        <h3>Several grouped lists</h3>
+        <div class="code-block"><code>timetable = [
+    [<span class="code-string">"Maths"</span>, <span class="code-string">"English"</span>, <span class="code-string">"Science"</span>],
+    [<span class="code-string">"History"</span>, <span class="code-string">"Art"</span>, <span class="code-string">"PE"</span>],
+    [<span class="code-string">"Maths"</span>, <span class="code-string">"Computing"</span>, <span class="code-string">"Music"</span>]
+]</code></div>
+      </article>
+    </div>
+    <div class="callout"><p><strong>The outer list organises the groups.</strong> In the timetable, each inner list represents one day and each value inside that inner list represents one subject.</p></div>
+  </section>
+
+  <section class="lesson" id="shape">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">Make the structure visible</p><h2>Outside list → inside list → item</h2></div></div>
+    <p>Use the Code Institute restaurant-order example. The variable <code>orders</code> refers to one outer list containing three customer lists.</p>
+    <div class="code-block"><code>orders = [
+    [<span class="code-string">"pizza"</span>, <span class="code-string">"cola"</span>],     <span class="code-comment"># Customer 0</span>
+    [<span class="code-string">"burger"</span>, <span class="code-string">"fries"</span>],  <span class="code-comment"># Customer 1</span>
+    [<span class="code-string">"salad"</span>]              <span class="code-comment"># Customer 2</span>
+]</code></div>
+    <div class="route">
+      <article><span>LEVEL 0</span><strong>The variable</strong><small><code>orders</code> names the complete nested structure.</small></article>
+      <article><span>LEVEL 1</span><strong>The outer list</strong><small>It contains three customer lists at indices 0, 1 and 2.</small></article>
+      <article><span>LEVEL 2</span><strong>One inner list</strong><small><code>orders[0]</code> selects Customer 0’s whole order.</small></article>
+      <article><span>LEVEL 3</span><strong>One item</strong><small><code>orders[0][1]</code> selects <code>"cola"</code> inside that order.</small></article>
+    </div>
+    <div class="callout callout--amber"><p><strong>Do not try to read both indices as one number.</strong> Read them as two separate journeys: first choose an inner list, then choose an item inside that list.</p></div>
+  </section>
+
+  <section class="lesson" id="outer">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">Take one step inward</p><h2>One index returns one inner list</h2></div></div>
+    <div class="code-block"><code>print(orders[<span class="code-num">0</span>])</code></div>
+    <div class="output"><strong>Printed output</strong><code>['pizza', 'cola']</code></div>
+    <div class="anatomy">
+      <div>
+        <p class="card-label">Start with the complete structure</p>
+        <h3><code>orders</code></h3>
+        <p>The outer list contains all three customers.</p>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div>
+        <p class="card-label">Use outer index 0</p>
+        <h3><code>orders[0]</code></h3>
+        <p>The result is Customer 0’s entire inner list.</p>
+      </div>
+    </div>
+    <div class="callout"><p><strong>The first index always acts on the outer list.</strong> Here, index <code>0</code> means the first customer list—not the first food item.</p></div>
+  </section>
+
+  <section class="lesson" id="item">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Take the second step</p><h2>Two indices return one inner value</h2></div></div>
+    <div class="code-block"><code>print(orders[<span class="code-num">0</span>][<span class="code-num">1</span>])</code></div>
+    <div class="output"><strong>Printed output</strong><code>cola</code></div>
+    <div class="operation operation--labelled">
+      <div>
+        <p class="card-label">First index · choose the group</p>
+        <h3><code>orders[0]</code></h3>
+        <code class="syntax">["pizza", "cola"]</code>
+      </div>
+      <div class="operation-label"><code>[1]</code></div>
+      <div>
+        <p class="card-label">Second index · choose inside it</p>
+        <h3>The second item</h3>
+        <code class="syntax">"cola"</code>
+      </div>
+    </div>
+    <div class="callout"><p><strong>Read <code>orders[0][1]</code> in plain English:</strong> go to the first customer list, then retrieve the second item from that list.</p></div>
+  </section>
+
+  <section class="lesson" id="change">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Use the same address to make a change</p><h2>Replace one nested item</h2></div></div>
+    <p>Retrieval and assignment begin with the same nested address. The assignment sign and the new value turn the address into a change.</p>
+    <div class="operation operation--labelled">
+      <div>
+        <p class="card-label">Before · Customer 1</p>
+        <h3>Burger and fries</h3>
+        <code class="syntax">["burger", "fries"]</code>
+      </div>
+      <div class="operation-label"><code>orders[1][0] = "salad"</code></div>
+      <div>
+        <p class="card-label">After · Customer 1</p>
+        <h3>Salad and fries</h3>
+        <code class="syntax">["salad", "fries"]</code>
+      </div>
+    </div>
+    <div class="code-block"><code>orders[<span class="code-num">1</span>][<span class="code-num">0</span>] = <span class="code-string">"salad"</span>
+print(orders)</code></div>
+    <div class="output"><strong>Printed output</strong><code>[['pizza', 'cola'], ['salad', 'fries'], ['salad']]</code></div>
+    <div class="callout"><p><strong>Left-to-right intent:</strong> go to Customer 1’s first item and give that location the value <code>"salad"</code>. Only that one nested position changes.</p></div>
+    <div class="future-note">
+      <h3>One more fact: how the line runs</h3>
+      <p>Your left-to-right reading is still the right way to understand what this line is for: go to the index on the left and give it the value on the right. When Python runs the line, it adds one more step: it first works out the value on the right, then stores that result in the position on the left. This matters when the right side is a calculation instead of a plain value.</p>
+      <div class="code-block"><code>scores = [[<span class="code-num">8</span>, <span class="code-num">9</span>], [<span class="code-num">6</span>, <span class="code-num">7</span>]]
+scores[<span class="code-num">1</span>][<span class="code-num">0</span>] = scores[<span class="code-num">1</span>][<span class="code-num">0</span>] + <span class="code-num">1</span></code></div>
+      <div class="output"><strong>Right side works out to</strong><code><span class="code-num">7</span></code><strong>Resulting list</strong><code>[[8, 9], [7, 7]]</code></div>
+    </div>
+  </section>
+
+  <section class="lesson" id="deeper">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">The rule scales</p><h2>More layers mean more deliberate steps</h2></div></div>
+    <p>The lesson also shows three-level structures. The method does not change: each pair of square brackets selects something from the result produced by the brackets before it.</p>
+    <div class="route">
+      <article><span>START</span><strong><code>restaurant</code></strong><small>The complete restaurant structure.</small></article>
+      <article><span>INDEX 1</span><strong><code>[2]</code></strong><small>Select Table 2.</small></article>
+      <article><span>INDEX 2</span><strong><code>[1]</code></strong><small>Select Customer 1 at that table.</small></article>
+      <article><span>INDEX 3</span><strong><code>[1]</code></strong><small>Select that customer’s second course: <code>"curry"</code>.</small></article>
+    </div>
+    <div class="code-block"><code>print(restaurant[<span class="code-num">2</span>][<span class="code-num">1</span>][<span class="code-num">1</span>])</code></div>
+    <div class="output"><strong>Printed output from the lesson example</strong><code>curry</code></div>
+    <div class="callout callout--amber"><p><strong>Never guess the number of indices from the variable name.</strong> Draw or inspect the data’s layers, then follow one level at a time.</p></div>
+  </section>
+
+  <section class="lesson" id="method">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">A repeatable reading method</p><h2>Ask three questions for every index</h2></div></div>
+    <ul class="checklist">
+      <li><span>01</span><p><strong>What collection am I looking at now?</strong><br>Begin with the outer variable or the result returned by the previous index.</p></li>
+      <li><span>02</span><p><strong>What does this index select from it?</strong><br>Name the group, row, customer, day or item in ordinary language.</p></li>
+      <li><span>03</span><p><strong>What type of thing did that selection return?</strong><br>If it returned another list, the next index acts inside that list.</p></li>
+      <li><span>04</span><p><strong>Have I reached the value I need?</strong><br>Stop when the result is the intended list or item; add another index only when another layer remains.</p></li>
+    </ul>
+    <div class="callout"><p><strong>Trace it with temporary steps when the brackets feel crowded:</strong> store or print the result after the first index, understand that smaller structure, then apply the next index.</p></div>
+    <div class="code-block"><code>customer_zero = orders[<span class="code-num">0</span>]
+print(customer_zero)
+
+drink = customer_zero[<span class="code-num">1</span>]
+print(drink)</code></div>
+    <div class="output"><strong>Printed output</strong><code>['pizza', 'cola']<br>cola</code></div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Apply the LMS timetable scenario</p><h2>Read and update a school timetable</h2></div></div>
+    <div class="practice">
+      <div>
+        <p class="card-label">The structure</p>
+        <h3>One inner list per day</h3>
+        <ul>
+          <li>Monday: Maths, English, Science</li>
+          <li>Tuesday: History, Art, PE</li>
+          <li>Wednesday: Maths, Computing, Music</li>
+        </ul>
+      </div>
+      <div>
+        <p class="card-label">Your three jobs</p>
+        <ol>
+          <li>Create the nested list <code>timetable</code>.</li>
+          <li>Replace Wednesday’s second subject with <code>"Drama"</code>, then print the complete timetable.</li>
+          <li>Print Tuesday’s final subject.</li>
+        </ol>
+        <div class="answer-lines"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <details class="answer-check">
+      <summary>Check the complete timetable exercise</summary>
+      <div>
+        <div class="code-block"><code>timetable = [
+    [<span class="code-string">"Maths"</span>, <span class="code-string">"English"</span>, <span class="code-string">"Science"</span>],
+    [<span class="code-string">"History"</span>, <span class="code-string">"Art"</span>, <span class="code-string">"PE"</span>],
+    [<span class="code-string">"Maths"</span>, <span class="code-string">"Computing"</span>, <span class="code-string">"Music"</span>]
+]
+
+timetable[<span class="code-num">2</span>][<span class="code-num">1</span>] = <span class="code-string">"Drama"</span>
+print(timetable)
+print(timetable[<span class="code-num">1</span>][<span class="code-num">2</span>])</code></div>
+        <div class="output"><strong>Printed output</strong><code>[['Maths', 'English', 'Science'], ['History', 'Art', 'PE'], ['Maths', 'Drama', 'Music']]<br>PE</code></div>
+        <p>Wednesday is outer index <code>2</code>; its second subject is inner index <code>1</code>. Tuesday is outer index <code>1</code>; its last subject is inner index <code>2</code>.</p>
+      </div>
+    </details>
+    <div class="callout"><p><strong>Transfer question:</strong> if you print only <code>timetable[1]</code>, do you expect one subject or a complete day?</p></div>
+    <details class="answer-check">
+      <summary>Reveal the transfer answer</summary>
+      <div><p>A complete day: <code>['History', 'Art', 'PE']</code>. One index selects one inner list. A second index is needed to retrieve one subject inside it.</p></div>
+    </details>
+  </section>
+
+  <section class="lesson" id="traps">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">Recognise what went wrong</p><h2>Common nested-list traps</h2></div></div>
+    <div class="diagnostic-grid">
+      <article class="diagnostic">
+        <h3>Expected one item</h3>
+        <span class="wrong">print(orders[0])</span>
+        <span class="actual">Actual: ['pizza', 'cola']</span>
+        <p>One index selected the complete inner list. Add the inner item’s index only if one value is required.</p>
+      </article>
+      <article class="diagnostic">
+        <h3>Reversed the two jobs</h3>
+        <span class="wrong">orders[1][0] expected "cola"</span>
+        <span class="actual">Actual: "burger"</span>
+        <p>The first index chooses Customer 1. Only then does index 0 choose that customer’s first item.</p>
+      </article>
+      <article class="diagnostic">
+        <h3>Counted from one</h3>
+        <span class="wrong">timetable[3][2]</span>
+        <span class="actual">Actual: IndexError</span>
+        <p>Three day lists use outer indices <code>0</code>, <code>1</code> and <code>2</code>. There is no outer index <code>3</code>.</p>
+      </article>
+      <article class="diagnostic">
+        <h3>Added one index too many</h3>
+        <span class="wrong">orders[0][1][0]</span>
+        <span class="actual">Actual: returns "c", the first character of "cola"</span>
+        <p>After two indices the result is already a string. Another index acts on that string, not on the original nested list.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">10</p><div><p class="eyebrow">Before moving on</p><h2>Quick recall</h2></div></div>
+    <ol>
+      <li>What makes a list “nested”?</li>
+      <li>What does the first index act on?</li>
+      <li>What does <code>orders[0]</code> return in the worked example?</li>
+      <li>How would you read <code>orders[0][1]</code> in ordinary language?</li>
+      <li>What visible syntax turns nested retrieval into nested assignment?</li>
+      <li>Why might a three-level structure require three indices?</li>
+    </ol>
+    <details class="answer-check">
+      <summary>Reveal the quick-recall answers</summary>
+      <div>
+        <ol>
+          <li>It contains another list—or several lists—as its elements.</li>
+          <li>The first index acts on the outer list.</li>
+          <li>Customer 0’s whole inner list: <code>['pizza', 'cola']</code>.</li>
+          <li>Choose Customer 0’s list, then retrieve its second item.</li>
+          <li>An assignment sign followed by the new value, such as <code>= "salad"</code>.</li>
+          <li>Each index moves through one layer: for example table, then customer, then course.</li>
+        </ol>
+      </div>
+    </details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> every index acts on the result to its left. Follow the structure one layer at a time instead of trying to decode all the brackets at once.</p></div>
+  </section>
+
+  <footer>
+    <div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “Nested Data Structures — Lists” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067833. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div>
+    <a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Containment — Ask with in</title>
+  <link rel="stylesheet" href="../assets/lesson-guide.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to lesson</a>
+<aside class="rail" aria-label="Lesson navigation">
+  <div class="brand"><a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">in?</a><div><p class="eyebrow">Collection · Data structures</p><p class="brand-name">Lesson 09 · Containment</p></div></div>
+  <nav class="section-nav" aria-label="Sections in Lesson 09"><ol>
+    <li><a href="#purpose"><span>01</span> Ask if data exists</a></li>
+    <li><a href="#boolean"><span>02</span> True or False</a></li>
+    <li><a href="#collections"><span>03</span> Different collections</a></li>
+    <li><a href="#dictionary"><span>04</span> Dictionary keys</a></li>
+    <li><a href="#values"><span>05</span> Dictionary values</a></li>
+    <li><a href="#decisions"><span>06</span> Use in a decision</a></li>
+    <li><a href="#not-in"><span>07</span> Check what is missing</a></li>
+    <li><a href="#practice"><span>08</span> Airport exercise</a></li>
+    <li><a href="#traps"><span>09</span> Common traps</a></li>
+    <li><a href="#recall"><span>10</span> Quick recall</a></li>
+  </ol></nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html" aria-current="page"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note"><p><strong>This page covers <code>in</code> and <code>not in</code>.</strong></p><p>They ask a membership question and return one Boolean answer.</p></div>
+</aside>
+<main id="content">
+  <header class="hero"><div><p class="eyebrow">Python data structures · visual revision guide</p><h1>Ask what is <em>inside.</em></h1><p class="lede">The <code>in</code> operator checks whether something belongs to a collection. Its answer is always the Boolean value <code>True</code> or <code>False</code>.</p></div><div class="hero-index"><strong>2</strong><span>possible answers</span></div></header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the question</p><h2>Does this collection contain it?</h2></div></div>
+    <p class="thesis">Containment is a yes-or-no test. It lets a program check existing data before deciding what should happen next.</p>
+    <div class="anatomy"><div><p class="card-label">What to find</p><h3>The candidate element</h3><code class="syntax">"Thor"</code></div><div class="arrow" aria-hidden="true">→</div><div><p class="card-label">Where to look</p><h3>The collection</h3><code class="syntax">in avengers</code></div></div>
+    <div class="code-block"><code>avengers = [<span class="code-string">"Thor"</span>, <span class="code-string">"Hulk"</span>, <span class="code-string">"Black Widow"</span>]
+print(<span class="code-string">"Thor"</span> in avengers)</code></div>
+    <div class="output"><strong>Printed output</strong><code>True</code></div>
+  </section>
+
+  <section class="lesson" id="boolean">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">Python answers the question</p><h2>The result is a Boolean</h2></div></div>
+    <div class="versus"><article><span class="mode-tag">Found</span><h3><code>True</code></h3><p>The candidate element belongs to the collection being searched.</p></article><article><span class="mode-tag mode-tag--change">Not found</span><h3><code>False</code></h3><p>The candidate element does not belong to that collection.</p></article></div>
+    <div class="callout"><p><strong><code>in</code> does not retrieve the element.</strong> It reports whether the membership statement is true or false.</p></div>
+  </section>
+
+  <section class="lesson" id="collections">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">The same question works broadly</p><h2>Lists, tuples, sets and strings</h2></div></div>
+    <div class="catalogue-wrap"><table class="catalogue"><thead><tr><th>Expression</th><th>What Python checks</th><th>Result</th></tr></thead><tbody>
+      <tr><td><code>"apple" in ["apple", "pear"]</code></td><td>List elements</td><td><code>True</code></td></tr>
+      <tr><td><code>3 in (1, 2, 3)</code></td><td>Tuple elements</td><td><code>True</code></td></tr>
+      <tr><td><code>"a" in {"a", "b"}</code></td><td>Set elements</td><td><code>True</code></td></tr>
+      <tr><td><code>"lo" in "hello"</code></td><td>Characters or a continuous substring</td><td><code>True</code></td></tr>
+    </tbody></table></div>
+    <div class="callout"><p><strong>For these collections, Python checks their contained values.</strong> Dictionaries are the important exception explored next.</p></div>
+  </section>
+
+  <section class="lesson" id="dictionary">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">A special dictionary rule</p><h2>Plain <code>in</code> checks dictionary keys</h2></div></div>
+    <div class="code-block"><code>data = {<span class="code-string">"name"</span>: <span class="code-string">"Lina"</span>, <span class="code-string">"age"</span>: <span class="code-num">30</span>}
+
+print(<span class="code-string">"name"</span> in data)
+print(<span class="code-string">"Lina"</span> in data)</code></div>
+    <div class="output"><strong>Printed output</strong><code>True<br>False</code></div>
+    <div class="versus"><article><span class="mode-tag">Key search</span><h3><code>"name" in data</code></h3><p><code>"name"</code> is a key, so the result is <code>True</code>.</p></article><article><span class="mode-tag mode-tag--change">Not a key</span><h3><code>"Lina" in data</code></h3><p><code>"Lina"</code> is a value, so plain dictionary containment returns <code>False</code>.</p></article></div>
+  </section>
+
+  <section class="lesson" id="values">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">State where Python should search</p><h2>Use <code>.values()</code> for dictionary values</h2></div></div>
+    <div class="code-block"><code>print(<span class="code-string">"Lina"</span> in data.values())</code></div>
+    <div class="output"><strong>Printed output</strong><code>True</code></div>
+    <div class="callout callout--amber"><p><strong>Keep the two questions separate:</strong> <code>candidate in dictionary</code> checks keys; <code>candidate in dictionary.values()</code> checks values.</p></div>
+  </section>
+
+  <section class="lesson" id="decisions">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">Use the Boolean to control a route</p><h2>Containment can become an <code>if</code> condition</h2></div></div>
+    <div class="code-block"><code>grocery_list = [<span class="code-string">"milk"</span>, <span class="code-string">"eggs"</span>, <span class="code-string">"apples"</span>, <span class="code-string">"bread"</span>]
+
+if <span class="code-string">"apples"</span> in grocery_list:
+    print(<span class="code-string">"You already have apples!"</span>)
+else:
+    print(<span class="code-string">"Add apples to your list."</span>)</code></div>
+    <div class="output"><strong>Printed output</strong><code>You already have apples!</code></div>
+    <div class="route"><article><span>QUESTION</span><strong>Are apples in the list?</strong><small>The expression produces a Boolean.</small></article><article><span>TRUE ROUTE</span><strong>Already present</strong><small>Run the indented <code>if</code> action.</small></article><article><span>FALSE ROUTE</span><strong>Not present</strong><small>Skip the <code>if</code> action.</small></article><article><span>ALTERNATIVE</span><strong>Run <code>else</code></strong><small>Tell the learner to add apples.</small></article></div>
+  </section>
+
+  <section class="lesson" id="not-in">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">Reverse the membership question</p><h2><code>not in</code> checks what is missing</h2></div></div>
+    <div class="code-block"><code>phone_numbers = [<span class="code-string">"123-456-7890"</span>, <span class="code-string">"555-111-2222"</span>]
+new_number = <span class="code-string">"999-888-7777"</span>
+
+if new_number not in phone_numbers:
+    phone_numbers.append(new_number)
+
+print(phone_numbers)</code></div>
+    <div class="output"><strong>Printed output</strong><code>['123-456-7890', '555-111-2222', '999-888-7777']</code></div>
+    <div class="callout"><p><strong><code>not in</code> is also a Boolean question:</strong> “Is this candidate absent from the collection?” Here the answer is <code>True</code>, so Python appends the new number.</p></div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Apply the LMS airport scenario</p><h2>Check a scanned item</h2></div></div>
+    <div class="practice"><div><p class="card-label">The data</p><h3>Restricted items</h3><p>Use <code>"water bottle"</code>, <code>"laptop"</code> and <code>"umbrella"</code>. The scanner flags <code>"laptop"</code>.</p></div><div><p class="card-label">The decision</p><ol><li>Create the restricted-items list.</li><li>Store the scanned item.</li><li>If it is not restricted, print <code>"No issues with this item."</code></li><li>Otherwise, request removal for inspection.</li></ol><div class="answer-lines"><span></span><span></span><span></span></div></div></div>
+    <details class="answer-check"><summary>Check the airport-security exercise</summary><div><div class="code-block"><code>restricted_items = [
+    <span class="code-string">"water bottle"</span>,
+    <span class="code-string">"laptop"</span>,
+    <span class="code-string">"umbrella"</span>
+]
+scanned_item = <span class="code-string">"laptop"</span>
+
+if scanned_item not in restricted_items:
+    print(<span class="code-string">"No issues with this item."</span>)
+else:
+    print(<span class="code-string">"Please remove this item for inspection."</span>)</code></div><div class="output"><strong>Printed output</strong><code>Please remove this item for inspection.</code></div><p><code>"laptop"</code> is present, so <code>scanned_item not in restricted_items</code> is <code>False</code>. Python therefore runs the <code>else</code> branch.</p></div></details>
+  </section>
+
+  <section class="lesson" id="traps">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">Recognise the wrong mental model</p><h2>Common containment traps</h2></div></div>
+    <div class="diagnostic-grid"><article class="diagnostic"><h3>Expected the element back</h3><span class="wrong">"Thor" in avengers</span><span class="actual">Actual: True</span><p>Containment returns a Boolean, not the matching element.</p></article><article class="diagnostic"><h3>Searched a dictionary value directly</h3><span class="wrong">"Lina" in data</span><span class="actual">Actual: False</span><p>Plain dictionary containment checks keys. Use <code>data.values()</code>.</p></article><article class="diagnostic"><h3>Reversed the expression</h3><span class="wrong">grocery_list in "apples"</span><span class="actual">Actual: TypeError</span><p>Put the candidate on the left and the collection to search on the right.</p></article><article class="diagnostic"><h3>Misread <code>not in</code></h3><span class="wrong">"Thor" not in avengers</span><span class="actual">Actual: False</span><p>The statement is false because Thor is present.</p></article></div>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">10</p><div><p class="eyebrow">Finish the collection series</p><h2>Quick recall</h2></div></div>
+    <ol><li>What two values can <code>in</code> return?</li><li>What does plain <code>in</code> search in a dictionary?</li><li>How do you explicitly search dictionary values?</li><li>What question does <code>not in</code> ask?</li><li>Why is containment useful inside an <code>if</code> statement?</li></ol>
+    <details class="answer-check"><summary>Reveal the quick-recall answers</summary><div><ol><li><code>True</code> or <code>False</code>.</li><li>Dictionary keys.</li><li>Use <code>candidate in dictionary.values()</code>.</li><li>Whether the candidate is absent from the collection.</li><li>Its Boolean result lets Python select which branch should run.</li></ol></div></details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> read <code>candidate in collection</code> as one yes-or-no membership question. With dictionaries, decide explicitly whether “membership” means keys or values.</p></div>
+  </section>
+  <footer><div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “Checking Containment with ‘in’ Operator” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067835. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div><a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Nested Dictionaries — Follow the Keys</title>
+  <link rel="stylesheet" href="../assets/lesson-guide.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to lesson</a>
+<aside class="rail" aria-label="Lesson navigation">
+  <div class="brand"><a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">{{ : }}</a><div><p class="eyebrow">Collection · Data structures</p><p class="brand-name">Lesson 08 · Nested dictionaries</p></div></div>
+  <nav class="section-nav" aria-label="Sections in Lesson 08"><ol>
+    <li><a href="#purpose"><span>01</span> Information in layers</a></li>
+    <li><a href="#shape"><span>02</span> Dictionary inside dictionary</a></li>
+    <li><a href="#keys"><span>03</span> Chain keys</a></li>
+    <li><a href="#mix"><span>04</span> Mix keys and indices</a></li>
+    <li><a href="#change"><span>05</span> Change nested data</a></li>
+    <li><a href="#add"><span>06</span> Add nested data</a></li>
+    <li><a href="#practice"><span>07</span> User-profile exercise</a></li>
+    <li><a href="#traps"><span>08</span> Common traps</a></li>
+    <li><a href="#recall"><span>09</span> Quick recall</a></li>
+  </ol></nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html" aria-current="page"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note"><p><strong>This page covers nested dictionaries.</strong></p><p>Follow one key or index at a time and name what each step returns.</p></div>
+</aside>
+<main id="content">
+  <header class="hero"><div><p class="eyebrow">Python data structures · visual revision guide</p><h1>Follow the <em>keys.</em></h1><p class="lede">Nested dictionaries organise detailed information in layers. Each key opens one named part of the structure; a list inside it may then require a numbered index.</p></div><div class="hero-index"><strong>2</strong><span>selector types: key and index</span></div></header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the real job</p><h2>Keep related information together</h2></div></div>
+    <p class="thesis">A user profile may contain contact details, skills and preferences. Nesting keeps each group inside the person it belongs to without flattening everything into unrelated variables.</p>
+    <div class="two"><article class="card"><p class="card-label">Outer dictionary</p><h3>The complete person</h3><p>Keys such as <code>"name"</code> and <code>"details"</code> divide the profile into named parts.</p></article><article class="card"><p class="card-label">Nested values</p><h3>Groups inside groups</h3><p>A value may itself be a dictionary or list, allowing another layer of organised information.</p></article></div>
+    <div class="callout"><p><strong>The key question at every step:</strong> what type of value did this key return—a string, list or another dictionary?</p></div>
+  </section>
+
+  <section class="lesson" id="shape">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">See the structure before reading it</p><h2>A dictionary can be a value</h2></div></div>
+    <div class="code-block"><code>users = {
+    <span class="code-string">"user1"</span>: {
+        <span class="code-string">"name"</span>: <span class="code-string">"Morgan"</span>,
+        <span class="code-string">"age"</span>: <span class="code-num">25</span>
+    },
+    <span class="code-string">"user2"</span>: {
+        <span class="code-string">"name"</span>: <span class="code-string">"José"</span>,
+        <span class="code-string">"age"</span>: <span class="code-num">13</span>
+    }
+}</code></div>
+    <div class="route"><article><span>START</span><strong><code>users</code></strong><small>The complete outer dictionary.</small></article><article><span>OUTER KEY</span><strong><code>["user2"]</code></strong><small>Returns José’s whole inner dictionary.</small></article><article><span>INNER KEY</span><strong><code>["name"]</code></strong><small>Returns the name stored inside it.</small></article><article><span>RESULT</span><strong><code>"José"</code></strong><small>The requested string value.</small></article></div>
+  </section>
+
+  <section class="lesson" id="keys">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">One named step at a time</p><h2>Chain keys to retrieve a value</h2></div></div>
+    <div class="code-block"><code>print(users[<span class="code-string">"user2"</span>][<span class="code-string">"name"</span>])</code></div>
+    <div class="output"><strong>Printed output</strong><code>José</code></div>
+    <div class="callout"><p><strong>Plain-English reading:</strong> go to <code>"user2"</code> in <code>users</code>, then retrieve the value under <code>"name"</code> in that returned dictionary.</p></div>
+  </section>
+
+  <section class="lesson" id="mix">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Let the returned type choose the next selector</p><h2>Keys can lead to a list</h2></div></div>
+    <div class="code-block"><code>profile = {
+    <span class="code-string">"name"</span>: <span class="code-string">"Morgan"</span>,
+    <span class="code-string">"details"</span>: {
+        <span class="code-string">"age"</span>: <span class="code-num">25</span>,
+        <span class="code-string">"skills"</span>: [<span class="code-string">"Python"</span>, <span class="code-string">"SQL"</span>, <span class="code-string">"Excel"</span>]
+    }
+}
+
+print(profile[<span class="code-string">"details"</span>][<span class="code-string">"skills"</span>][<span class="code-num">0</span>])</code></div>
+    <div class="output"><strong>Printed output</strong><code>Python</code></div>
+    <div class="route"><article><span>DICTIONARY</span><strong><code>profile</code></strong><small>Begin with the complete profile.</small></article><article><span>KEY</span><strong><code>["details"]</code></strong><small>Returns a dictionary.</small></article><article><span>KEY</span><strong><code>["skills"]</code></strong><small>Returns a list.</small></article><article><span>INDEX</span><strong><code>[0]</code></strong><small>Returns the first list item: <code>"Python"</code>.</small></article></div>
+    <div class="callout callout--amber"><p><strong>Use a key for a dictionary and an index for a list.</strong> The selector changes because the type of collection changed.</p></div>
+  </section>
+
+  <section class="lesson" id="change">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Address first, assignment second</p><h2>Change an existing nested value</h2></div></div>
+    <p>For the next examples, the profile gains a <code>"contacts"</code> dictionary. This is the complete state before the email changes:</p>
+    <div class="code-block"><code>profile = {
+    <span class="code-string">"name"</span>: <span class="code-string">"Morgan"</span>,
+    <span class="code-string">"details"</span>: {
+        <span class="code-string">"age"</span>: <span class="code-num">25</span>,
+        <span class="code-string">"skills"</span>: [<span class="code-string">"Python"</span>, <span class="code-string">"SQL"</span>, <span class="code-string">"Excel"</span>]
+    },
+    <span class="code-string">"contacts"</span>: {
+        <span class="code-string">"email"</span>: <span class="code-string">"Jamie@example.com"</span>,
+        <span class="code-string">"phone"</span>: [<span class="code-string">"123-456-7890"</span>, <span class="code-string">"987-654-3210"</span>]
+    }
+}</code></div>
+    <div class="operation operation--labelled"><div><p class="card-label">Before · contacts</p><h3>Old email</h3><code class="syntax">"Jamie@example.com"</code></div><div class="operation-label"><code>profile["contacts"]["email"] = "newJamie@example.com"</code></div><div><p class="card-label">After · contacts</p><h3>New email</h3><code class="syntax">"newJamie@example.com"</code></div></div>
+    <div class="output"><strong>Resulting contacts dictionary</strong><code>{'email': 'newJamie@example.com', 'phone': ['123-456-7890', '987-654-3210']}</code></div>
+    <div class="callout"><p><strong>Left-to-right intent:</strong> enter <code>"contacts"</code>, go to <code>"email"</code>, and give that location the new string value.</p></div>
+    <div class="future-note">
+      <h3>One more fact: how the line runs</h3>
+      <p>Your left-to-right reading is still the right way to understand what this line is for: go to the key on the left and give it the value on the right. When Python runs the line, it adds one more step: it first works out the value on the right, then stores that result under the label on the left. This matters when the right side is a calculation instead of a plain value.</p>
+      <div class="code-block"><code>profile[<span class="code-string">"details"</span>][<span class="code-string">"age"</span>] = profile[<span class="code-string">"details"</span>][<span class="code-string">"age"</span>] + <span class="code-num">1</span></code></div>
+      <div class="output"><strong>Right side works out to</strong><code><span class="code-num">26</span></code><strong>Resulting dictionary</strong><code>{'age': <span class="code-num">26</span>, 'skills': ['Python', 'SQL', 'Excel']}</code></div>
+    </div>
+  </section>
+
+  <section class="lesson" id="add">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">A new key creates a new entry</p><h2>Add data at the correct layer</h2></div></div>
+    <div class="code-block"><code>profile[<span class="code-string">"contacts"</span>][<span class="code-string">"address"</span>] = <span class="code-string">"42 Wonderland Ave"</span>
+print(profile[<span class="code-string">"contacts"</span>])</code></div>
+    <div class="output"><strong>Printed output</strong><code>{'email': 'newJamie@example.com', 'phone': ['123-456-7890', '987-654-3210'], 'address': '42 Wonderland Ave'}</code></div>
+    <div class="callout"><p><strong>Why did this add instead of replace?</strong> The <code>"address"</code> key did not already exist inside <code>"contacts"</code>. Assignment creates it at that layer.</p></div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">Apply the LMS user-profile scenario</p><h2>Build preferences inside details</h2></div></div>
+    <div class="practice"><div><p class="card-label">Starting structure</p><h3>A user with details</h3><p>The nested <code>"details"</code> dictionary contains an email and a <code>"phone"</code> list holding one number.</p></div><div><p class="card-label">Your four jobs</p><ol><li>Append <code>"555-123-4567"</code> to the phone list.</li><li>Create a nested <code>"preferences"</code> dictionary.</li><li>Start with theme <code>"light"</code> and notifications <code>True</code>.</li><li>Change the theme to <code>"dark"</code> and print <code>user</code>.</li></ol><div class="answer-lines"><span></span><span></span><span></span><span></span></div></div></div>
+    <details class="answer-check"><summary>Check the complete user-profile exercise</summary><div><div class="code-block"><code>user = {
+    <span class="code-string">"username"</span>: <span class="code-string">"techlearner101"</span>,
+    <span class="code-string">"details"</span>: {
+        <span class="code-string">"email"</span>: <span class="code-string">"learner@example.com"</span>,
+        <span class="code-string">"phone"</span>: [<span class="code-string">"555-999-0000"</span>]
+    }
+}
+
+user[<span class="code-string">"details"</span>][<span class="code-string">"phone"</span>].append(<span class="code-string">"555-123-4567"</span>)
+user[<span class="code-string">"details"</span>][<span class="code-string">"preferences"</span>] = {
+    <span class="code-string">"theme"</span>: <span class="code-string">"light"</span>,
+    <span class="code-string">"notifications"</span>: <span class="code-bool">True</span>
+}
+user[<span class="code-string">"details"</span>][<span class="code-string">"preferences"</span>][<span class="code-string">"theme"</span>] = <span class="code-string">"dark"</span>
+print(user)</code></div><div class="output"><strong>Printed output</strong><code>{'username': 'techlearner101', 'details': {'email': 'learner@example.com', 'phone': ['555-999-0000', '555-123-4567'], 'preferences': {'theme': 'dark', 'notifications': True}}}</code></div></div></details>
+  </section>
+
+  <section class="lesson" id="traps">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Diagnose the route</p><h2>Common nested-data traps</h2></div></div>
+    <div class="diagnostic-grid"><article class="diagnostic"><h3>Stopped one layer early</h3><span class="wrong">profile["details"]</span><span class="actual">Actual: the complete details dictionary</span><p>Add another key only when you need one value inside it.</p></article><article class="diagnostic"><h3>Used an index on a dictionary</h3><span class="wrong">profile["details"][0]</span><span class="actual">Actual: KeyError: 0</span><p><code>"details"</code> returns a dictionary, so use one of its keys.</p></article><article class="diagnostic"><h3>Used a key on a list</h3><span class="wrong">profile["details"]["skills"]["Python"]</span><span class="actual">Actual: TypeError</span><p><code>"skills"</code> returns a list, so choose an item with a numeric index.</p></article><article class="diagnostic"><h3>Added the key at the wrong level</h3><span class="wrong">profile["address"] = "42 Wonderland Ave"</span><span class="actual">Actual: address appears beside contacts</span><p>Use <code>profile["contacts"]["address"]</code> when the address belongs inside contacts.</p></article></div>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">Before moving on</p><h2>Quick recall</h2></div></div>
+    <ol><li>What makes a dictionary nested?</li><li>What does <code>users["user2"]</code> return?</li><li>Why does <code>profile["details"]["skills"][0]</code> end with an index?</li><li>How does assignment decide whether to add or replace a nested key?</li></ol>
+    <details class="answer-check"><summary>Reveal the quick-recall answers</summary><div><ol><li>One of its values is another dictionary or collection.</li><li>The complete dictionary stored under <code>"user2"</code>.</li><li><code>"skills"</code> returns a list, and lists use numeric indices.</li><li>An existing key is replaced; a new key is added at the addressed dictionary layer.</li></ol></div></details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> follow the data one layer at a time. The value returned by the current step tells you whether the next selector must be a key or an index.</p></div>
+  </section>
+  <footer><div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “Nested Data Structures — Dictionaries” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067834. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div><a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a></footer>
+</main>
+</body>
+</html>

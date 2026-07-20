@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Sets — Unique, Unordered Collections</title>
+  <link rel="stylesheet" href="../assets/lesson-guide.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to lesson</a>
+
+<aside class="rail" aria-label="Lesson navigation">
+  <div class="brand">
+    <a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">{ · }</a>
+    <div><p class="eyebrow">Collection · Data structures</p><p class="brand-name">Lesson 06 · Sets</p></div>
+  </div>
+  <nav class="section-nav" aria-label="Sections in Lesson 06">
+    <ol>
+      <li><a href="#purpose"><span>01</span> Why sets?</a></li>
+      <li><a href="#create"><span>02</span> Create a set</a></li>
+      <li><a href="#contents"><span>03</span> Allowed values</a></li>
+      <li><a href="#order"><span>04</span> Unordered output</a></li>
+      <li><a href="#duplicates"><span>05</span> Add a duplicate</a></li>
+      <li><a href="#union"><span>06</span> Union</a></li>
+      <li><a href="#intersection"><span>07</span> Intersection</a></li>
+      <li><a href="#differences"><span>08</span> Two differences</a></li>
+      <li><a href="#remove"><span>09</span> Discard and clear</a></li>
+      <li><a href="#map"><span>10</span> Method map</a></li>
+      <li><a href="#practice"><span>11</span> Movie rentals</a></li>
+      <li><a href="#traps"><span>12</span> Common traps</a></li>
+      <li><a href="#recall"><span>13</span> Quick recall</a></li>
+    </ol>
+  </nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html" aria-current="page"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note">
+    <p><strong>This page covers sets.</strong></p>
+    <p>Its foundation is recognising when uniqueness matters more than position or order.</p>
+  </div>
+</aside>
+
+<main id="content">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Python data structures · visual revision guide</p>
+      <h1>Keep each value <em>once.</em></h1>
+      <p class="lede">A set stores a collection of unique elements. It is useful for removing repetition and for asking how two groups combine, overlap or differ.</p>
+    </div>
+    <div class="hero-index"><strong>2</strong><span>defining properties</span></div>
+  </header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the job</p><h2>Uniqueness matters more than position</h2></div></div>
+    <p class="thesis">A set answers “Which distinct values belong to this group?” It does not answer “What is the third item?”</p>
+    <div class="two">
+      <article class="card"><p class="card-label">Property 1 · unique</p><h3>One copy of each value</h3><p>Repeated input does not create repeated set elements.</p></article>
+      <article class="card"><p class="card-label">Property 2 · unordered</p><h3>No dependable display position</h3><p>Python may print the elements in a different order from the one you typed.</p></article>
+    </div>
+    <div class="callout"><p><strong>Use a set when the question concerns membership, uniqueness or comparison between groups.</strong> Use a list or tuple when sequence and indexed position are part of the meaning.</p></div>
+  </section>
+
+  <section class="lesson" id="create">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">Read the punctuation</p><h2>Create a set with curly braces</h2></div></div>
+    <p>Curly braces surround a populated set. Commas separate one element from the next.</p>
+    <div class="anatomy">
+      <div><p class="card-label">{ curly braces }</p><h3>Mark the set</h3><code class="syntax">hobbies = { ... }</code></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div><p class="card-label">Unique elements</p><h3>Four different hobbies</h3><code class="syntax">"reading", "coding", "hiking", "photography"</code></div>
+    </div>
+    <div class="code-block"><code>hobbies = {
+    <span class="code-string">"reading"</span>,
+    <span class="code-string">"coding"</span>,
+    <span class="code-string">"hiking"</span>,
+    <span class="code-string">"photography"</span>
+}</code></div>
+    <div class="callout callout--amber"><p><strong>An empty set is written <code>set()</code>, not <code>{}</code>.</strong> Empty curly braces create an empty dictionary, so Python needs the function form to know that you want a set.</p></div>
+    <div class="code-block"><code>empty_set = set()
+print(empty_set)</code></div>
+    <div class="output"><strong>Printed output</strong><code>set()</code></div>
+  </section>
+
+  <section class="lesson" id="contents">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">Elements must be stable</p><h2>What can a set contain?</h2></div></div>
+    <p>The LMS lesson states that set elements must be immutable. Values such as numbers, Booleans, strings and tuples are allowed; mutable lists and dictionaries are not.</p>
+    <div class="versus">
+      <article>
+        <span class="mode-tag">Allowed elements</span>
+        <h3>Values that can remain stable</h3>
+        <div class="code-block"><code>valid = {
+    <span class="code-num">42</span>,
+    <span class="code-bool">True</span>,
+    <span class="code-string">"coding"</span>,
+    (<span class="code-num">3</span>, <span class="code-num">7</span>)
+}</code></div>
+      </article>
+      <article>
+        <span class="mode-tag mode-tag--change">Not allowed</span>
+        <h3>A list cannot be a set element</h3>
+        <div class="code-block"><code>invalid = {[<span class="code-num">3</span>, <span class="code-num">7</span>]}</code></div>
+        <div class="output"><strong>One common Python error</strong><code>TypeError: unhashable type: 'list'</code></div>
+      </article>
+    </div>
+    <div class="callout"><p><strong>Plain-English translation:</strong> Python cannot safely use a changeable list as one distinct set element. Newer Python versions may expand the wording to <code>cannot use 'list' as a set element</code>; the underlying rule is the same.</p></div>
+  </section>
+
+  <section class="lesson" id="order">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Real output may look rearranged</p><h2>A set has no promised display order</h2></div></div>
+    <div class="code-block"><code>fruits = {
+    <span class="code-string">"apple"</span>,
+    <span class="code-string">"banana"</span>,
+    <span class="code-string">"cherry"</span>
+}
+print(fruits)</code></div>
+    <div class="output"><strong>One possible printed output</strong><code>{'apple', 'cherry', 'banana'}</code></div>
+    <div class="callout callout--amber"><p><strong>You have not made a mistake if the order differs.</strong> Python optimises how a set is stored, so another environment or run may display the same three values in another order. Judge the set by its contents, not by their printed positions.</p></div>
+    <div class="future-note"><p class="card-label">Practical consequence</p><h3>Do not retrieve a set element by index</h3><p>A set is not a sequence, so code such as <code>fruits[0]</code> does not mean “the first fruit.”</p></div>
+  </section>
+
+  <section class="lesson" id="duplicates">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Test the uniqueness rule</p><h2>Adding a duplicate changes nothing</h2></div></div>
+    <p><code>.add(value)</code> asks the set to include a value. If the value already belongs to the set, the set remains unchanged.</p>
+    <div class="operation operation--labelled">
+      <div><p class="card-label">Before · 3 unique fruits</p><h3>Cherry already belongs</h3><code class="syntax">{"apple", "banana", "cherry"}</code></div>
+      <div class="operation-label"><code>fruits.add("cherry")</code></div>
+      <div><p class="card-label">After · still 3 unique fruits</p><h3>No second cherry appears</h3><code class="syntax">{"apple", "banana", "cherry"}</code></div>
+    </div>
+    <div class="callout"><p><strong><code>.add()</code> does not report an error for a duplicate.</strong> It simply leaves the set’s unique contents unchanged.</p></div>
+  </section>
+
+  <section class="lesson" id="union">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">Ask the broadest group question</p><h2>Union: what appears in either set?</h2></div></div>
+    <p><code>first.union(second)</code> creates a new set containing every unique element found in the first set, the second set, or both.</p>
+    <div class="code-block"><code>fruits = {<span class="code-string">"apple"</span>, <span class="code-string">"banana"</span>, <span class="code-string">"cherry"</span>}
+tropical_fruits = {<span class="code-string">"banana"</span>, <span class="code-string">"mango"</span>, <span class="code-string">"pineapple"</span>}
+
+all_fruits = fruits.union(tropical_fruits)
+print(all_fruits)</code></div>
+    <div class="output"><strong>One possible printed output</strong><code>{'apple', 'banana', 'cherry', 'mango', 'pineapple'}</code></div>
+    <div class="callout"><p><strong>Why only one banana?</strong> Banana appears in both source sets, but the union is itself a set and therefore keeps only one copy.</p></div>
+  </section>
+
+  <section class="lesson" id="intersection">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">Ask about overlap</p><h2>Intersection: what appears in both?</h2></div></div>
+    <p><code>first.intersection(second)</code> creates a new set containing only elements shared by both source sets.</p>
+    <div class="code-block"><code>common_fruits = fruits.intersection(tropical_fruits)
+print(common_fruits)</code></div>
+    <div class="output"><strong>Printed output</strong><code>{'banana'}</code></div>
+    <div class="callout"><p><strong>The overlap contains one value:</strong> banana belongs to both <code>fruits</code> and <code>tropical_fruits</code>.</p></div>
+  </section>
+
+  <section class="lesson" id="differences">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Two similar names answer different questions</p><h2>Difference versus symmetric difference</h2></div></div>
+    <div class="versus">
+      <article>
+        <span class="mode-tag">Directional question</span>
+        <h3>First set only</h3>
+        <p>What belongs to the first set but not the second?</p>
+        <div class="code-block"><code>fruits.difference(tropical_fruits)</code></div>
+        <div class="output"><strong>One possible result</strong><code>{'apple', 'cherry'}</code></div>
+      </article>
+      <article>
+        <span class="mode-tag mode-tag--both">Either side, not both</span>
+        <h3>Exactly one set</h3>
+        <p>What belongs to exactly one of the two sets?</p>
+        <div class="code-block"><code>fruits.symmetric_difference(tropical_fruits)</code></div>
+        <div class="output"><strong>One possible result</strong><code>{'apple', 'cherry', 'mango', 'pineapple'}</code></div>
+      </article>
+    </div>
+    <div class="callout callout--amber"><p><strong>The word “symmetric” removes the direction.</strong> Ordinary difference begins with the first set. Symmetric difference treats both sides equally and removes their shared overlap.</p></div>
+  </section>
+
+  <section class="lesson" id="remove">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">Change the set deliberately</p><h2>Discard one value or clear everything</h2></div></div>
+    <div class="two">
+      <article class="card">
+        <p class="card-label">Remove one named element</p>
+        <h3><code>.discard(value)</code></h3>
+        <div class="code-block"><code>fruits.discard(<span class="code-string">"banana"</span>)
+print(fruits)</code></div>
+        <div class="output"><strong>One possible printed output</strong><code>{'apple', 'cherry'}</code></div>
+      </article>
+      <article class="card">
+        <p class="card-label">Remove every element</p>
+        <h3><code>.clear()</code></h3>
+        <div class="code-block"><code>fruits.clear()
+print(fruits)</code></div>
+        <div class="output"><strong>Printed output</strong><code>set()</code></div>
+      </article>
+    </div>
+    <div class="callout"><p><strong>Why does an emptied set print as <code>set()</code>?</strong> Python must distinguish it from <code>{}</code>, which represents an empty dictionary.</p></div>
+  </section>
+
+  <section class="lesson" id="map">
+    <div class="lesson-head"><p class="lesson-no">10</p><div><p class="eyebrow">Choose the question before the method</p><h2>Set method map</h2></div></div>
+    <div class="catalogue-wrap">
+      <table class="catalogue">
+        <thead><tr><th>Method</th><th>Question or job</th><th>Changes the original set?</th></tr></thead>
+        <tbody>
+          <tr><td><code>.add(value)</code></td><td>Include this value if it is not already present.</td><td>Yes</td></tr>
+          <tr><td><code>.union(other)</code></td><td>What belongs to either set?</td><td>No — returns a new set</td></tr>
+          <tr><td><code>.intersection(other)</code></td><td>What belongs to both sets?</td><td>No — returns a new set</td></tr>
+          <tr><td><code>.difference(other)</code></td><td>What belongs to the first set but not the other?</td><td>No — returns a new set</td></tr>
+          <tr><td><code>.symmetric_difference(other)</code></td><td>What belongs to exactly one set?</td><td>No — returns a new set</td></tr>
+          <tr><td><code>.discard(value)</code></td><td>Remove this named value.</td><td>Yes</td></tr>
+          <tr><td><code>.clear()</code></td><td>Remove every value.</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">11</p><div><p class="eyebrow">Use the LMS movie-rental scenario</p><h2>Manage unique movie titles</h2></div></div>
+    <div class="practice">
+      <div>
+        <p class="card-label">Two rental days</p>
+        <h3>Starting sets</h3>
+        <p><strong>Day 1:</strong> Little Mermaid, Snow White, Avatar</p>
+        <p><strong>Day 2:</strong> Avatar, Titanic, Matrix</p>
+      </div>
+      <div>
+        <p class="card-label">Your four jobs</p>
+        <ol>
+          <li>Create both sets.</li>
+          <li>Create and print the set of all unique rentals.</li>
+          <li>Create and print the set rented on both days.</li>
+          <li>Discard <code>"Avatar"</code> from Day 1 and print the changed Day 1 set.</li>
+        </ol>
+        <div class="answer-lines"><span></span><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <details class="answer-check">
+      <summary>Check the complete movie-rental exercise</summary>
+      <div>
+        <div class="code-block"><code>rented_movies_day1 = {
+    <span class="code-string">"Little Mermaid"</span>,
+    <span class="code-string">"Snow White"</span>,
+    <span class="code-string">"Avatar"</span>
+}
+
+rented_movies_day2 = {
+    <span class="code-string">"Avatar"</span>,
+    <span class="code-string">"Titanic"</span>,
+    <span class="code-string">"Matrix"</span>
+}
+
+all_movies = rented_movies_day1.union(rented_movies_day2)
+common_movies = rented_movies_day1.intersection(rented_movies_day2)
+rented_movies_day1.discard(<span class="code-string">"Avatar"</span>)
+
+print(<span class="code-string">"All unique movies:"</span>, all_movies)
+print(<span class="code-string">"Rented on both days:"</span>, common_movies)
+print(<span class="code-string">"Day 1 after return:"</span>, rented_movies_day1)</code></div>
+        <div class="output"><strong>One possible printed output</strong><code>All unique movies: {'Avatar', 'Little Mermaid', 'Titanic', 'Snow White', 'Matrix'}<br>Rented on both days: {'Avatar'}<br>Day 1 after return: {'Snow White', 'Little Mermaid'}</code></div>
+        <p>Your element order may differ. Check that the membership of each set is correct.</p>
+      </div>
+    </details>
+    <div class="callout"><p><strong>Transfer question:</strong> why is <code>"Avatar"</code> shown only once in <code>all_movies</code> even though it was rented on both days?</p></div>
+    <details class="answer-check">
+      <summary>Reveal the transfer answer</summary>
+      <div><p><code>all_movies</code> is a set. Its union includes every title found across the two days, but the set’s uniqueness rule stores only one <code>"Avatar"</code> element.</p></div>
+    </details>
+  </section>
+
+  <section class="lesson" id="traps">
+    <div class="lesson-head"><p class="lesson-no">12</p><div><p class="eyebrow">Recognise the behaviour</p><h2>Common set traps</h2></div></div>
+    <div class="diagnostic-grid">
+      <article class="diagnostic"><h3>Expected the typed order</h3><span class="wrong">print({"apple", "banana", "cherry"})</span><span class="actual">Actual: the displayed order may vary</span><p>A set promises unique membership, not positional order.</p></article>
+      <article class="diagnostic"><h3>Expected a duplicate</h3><span class="wrong">{"apple", "apple"}</span><span class="actual">Actual content: {"apple"}</span><p>Repeated equal values collapse into one element.</p></article>
+      <article class="diagnostic"><h3>Tried to create an empty set</h3><span class="wrong">empty_set = {}</span><span class="actual">Actual type: dictionary</span><p>Use <code>empty_set = set()</code>.</p></article>
+      <article class="diagnostic"><h3>Tried to retrieve by position</h3><span class="wrong">fruits[0]</span><span class="actual">Actual: TypeError — set is not subscriptable</span><p>Sets are unordered and do not support indexed retrieval.</p></article>
+    </div>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">13</p><div><p class="eyebrow">Before moving on</p><h2>Quick recall</h2></div></div>
+    <ol>
+      <li>What are the two defining properties of a set?</li>
+      <li>How do you create an empty set?</li>
+      <li>Why can the printed order differ from the order you typed?</li>
+      <li>What question does <code>.union()</code> answer?</li>
+      <li>What question does <code>.intersection()</code> answer?</li>
+      <li>How does ordinary difference differ from symmetric difference?</li>
+      <li>Which two methods in this lesson directly remove elements?</li>
+    </ol>
+    <details class="answer-check">
+      <summary>Reveal the quick-recall answers</summary>
+      <div>
+        <ol>
+          <li>A set contains unique elements and has no promised order.</li>
+          <li>Use <code>set()</code>; empty curly braces create a dictionary.</li>
+          <li>Python optimises the set’s internal storage and does not preserve a display sequence.</li>
+          <li>Which unique elements belong to either set?</li>
+          <li>Which elements belong to both sets?</li>
+          <li>Difference keeps first-set-only elements; symmetric difference keeps elements found on exactly one side.</li>
+          <li><code>.discard(value)</code> removes one named element; <code>.clear()</code> removes them all.</li>
+        </ol>
+      </div>
+    </details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> a set is about membership, not position. Its methods ask how distinct groups combine, overlap and differ.</p></div>
+  </section>
+
+  <footer>
+    <div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “Sets” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067832. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div>
+    <a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a>
+  </footer>
+</main>
+</body>
+</html>

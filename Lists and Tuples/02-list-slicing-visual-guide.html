@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A visual learner guide to Python list slicing, omitted bounds, steps, reversal, replacement and out-of-range slices.">
+<title>Python List Slicing — Visual Revision Guide</title>
+<link rel="stylesheet" href="../assets/lesson-guide.css">
+<style>
+.slice-rule{margin:2rem 0;padding:1.5rem;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);overflow-x:auto}
+.slice-grid{display:grid;grid-template-columns:repeat(10,minmax(5.5rem,1fr));min-width:55rem}
+.slice-cell{display:grid;text-align:center}
+.slice-cell .pos{border-right:1px solid rgba(23,79,63,.18)}
+.slice-cell .value{padding:1rem .45rem;font-size:.86rem}
+.slice-cell.is-taken .value{border-top:4px solid var(--green);background:var(--mint)}
+.slice-cell.is-stop .value{border-top:4px dashed var(--coral)}
+.slice-key{display:flex;flex-wrap:wrap;gap:1rem;margin:.9rem 0 0;color:var(--muted);font-size:.8rem}
+.slice-key span{display:inline-flex;gap:.45rem;align-items:center}
+.key-line{display:inline-block;width:1.7rem;border-top:4px solid var(--green)}
+.key-line--stop{border-top:4px dashed var(--coral)}
+.syntax-parts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:2rem 0;padding:1px;background:var(--line)}
+.syntax-parts>div{padding:1.3rem;background:var(--panel)}
+.syntax-parts strong{display:block;margin:.45rem 0;color:var(--green);font:1.25rem var(--mono)}
+.result-strip{margin:1rem 0;padding:1rem 1.2rem;border-left:5px solid var(--coral);background:var(--coral-soft)}
+.result-strip p{margin:0}
+@media(max-width:720px){.syntax-parts{grid-template-columns:1fr}}
+@media print{.slice-rule{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the guide</a>
+<aside class="rail" aria-label="Guide navigation">
+  <div class="brand"><a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">[ : ]</a><div><p class="eyebrow">Collection · Lists and Tuples</p><p class="brand-name">Lesson 02 · List Slicing</p></div></div>
+  <nav class="section-nav" aria-label="Sections in Lesson 02"><ol>
+    <li><a href="#purpose"><span>01</span> Why slice?</a></li>
+    <li><a href="#rule"><span>02</span> The central rule</a></li>
+    <li><a href="#bounds"><span>03</span> Omitted bounds</a></li>
+    <li><a href="#negative"><span>04</span> From the end</a></li>
+    <li><a href="#step"><span>05</span> Step and reverse</a></li>
+    <li><a href="#modify"><span>06</span> Replace a slice</a></li>
+    <li><a href="#range"><span>07</span> Out of range</a></li>
+    <li><a href="#practice"><span>08</span> Practice</a></li>
+    <li><a href="#traps"><span>09</span> Common traps</a></li>
+    <li><a href="#recall"><span>10</span> Quick recall</a></li>
+  </ol></nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html" aria-current="page"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note"><p><strong>This page covers list slicing</strong></p><p>It builds directly on the indexing taught in Lesson 01.</p></div>
+</aside>
+
+<main id="main">
+  <header class="hero">
+    <div><p class="eyebrow">Python collections · Visual revision guide</p><h1>Choose a section.<br><em>Keep its order.</em></h1><p class="lede">Indexing retrieves one item. Slicing retrieves a run of items by describing where that run starts, where it stops and—when needed—how it moves.</p></div>
+    <div class="hero-index"><strong>3</strong><span>slice instructions</span></div>
+  </header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the job</p><h2>Why slice a list?</h2></div></div>
+    <p class="thesis">Slicing lets you work with a section of a list without retrieving each item separately.</p>
+    <div class="two">
+      <article class="card"><span class="mode-tag">Retrieve one</span><p class="card-label">One item · indexing</p><h3>Ask for one position</h3><div class="code-block"><code>numbers[2]</code></div><div class="output"><strong>Python returns</strong><code>"two"</code></div></article>
+      <article class="card card--dark"><span class="mode-tag">Retrieve a section</span><p class="card-label">Several items · slicing</p><h3>Ask for a range</h3><div class="code-block"><code>numbers[2:6]</code></div><div class="output"><strong>Python returns</strong><code>["two", "three", "four", "five"]</code></div></article>
+    </div>
+    <div class="code-block"><code>numbers = [
+    <span class="code-string">"zero"</span>, <span class="code-string">"one"</span>, <span class="code-string">"two"</span>, <span class="code-string">"three"</span>, <span class="code-string">"four"</span>,
+    <span class="code-string">"five"</span>, <span class="code-string">"six"</span>, <span class="code-string">"seven"</span>, <span class="code-string">"eight"</span>, <span class="code-string">"nine"</span>
+]</code></div>
+    <div class="callout callout--amber">
+      <p><strong>Square brackets define the list.</strong> The opening <code>[</code> and closing <code>]</code> tell Python that the values between them belong to one list. Commas separate one list item from the next.</p>
+      <p>Quotation marks do a different job: they define a value as text. The example above stores words, so it uses strings such as <code>"one"</code>. A temperature list stores integers, so it uses numbers without quotation marks: <code>[21, 22, 20]</code>.</p>
+    </div>
+    <p>This same ten-item list runs unchanged through Sections 01–07.</p>
+    <div class="callout"><p><strong>Plain-English definition:</strong> a slice is a selected section of a sequence. Python writes its instructions between square brackets and separates them with colons.</p></div>
+  </section>
+
+  <section class="lesson" id="rule">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">The idea everything else uses</p><h2>Start included. Stop excluded.</h2></div></div>
+    <p class="thesis"><code>numbers[2:6]</code> begins at index <code>2</code> and travels towards index <code>6</code>, but stops before taking the item at index <code>6</code>.</p>
+    <div class="callout">
+      <p><strong>What does the colon actually mean?</strong></p>
+      <p>The colon is a <strong>boundary separator</strong>. Read it as: “start here <strong>:</strong> stop before there.” It does not mean “print the number after me.” It separates the starting boundary from the stopping boundary.</p>
+      <p><code>2:6</code> therefore means: <strong>include index 2, then take items up to—but not including—index 6.</strong></p>
+    </div>
+    <div class="result-strip">
+      <p><strong>Index trace:</strong> <code>2:6</code> → TAKE indexes <code>2, 3, 4, 5</code> │ STOP BEFORE index <code>6</code></p>
+    </div>
+    <div class="syntax-parts">
+      <div><p class="card-label">Start</p><strong>2</strong><p>Take the item at this index first.</p></div>
+      <div><p class="card-label">Stop</p><strong>6</strong><p>Stop immediately before this index.</p></div>
+      <div><p class="card-label">Step</p><strong>not written</strong><p>Move forwards one item at a time.</p></div>
+    </div>
+    <div class="slice-rule" aria-label="Index map showing numbers 2 to 5 selected and index 6 excluded">
+      <div class="slice-grid">
+        <div class="slice-cell"><div class="pos">index 0</div><div class="value">"zero"</div></div>
+        <div class="slice-cell"><div class="pos">index 1</div><div class="value">"one"</div></div>
+        <div class="slice-cell is-taken"><div class="pos">index 2 · start</div><div class="value">"two"</div></div>
+        <div class="slice-cell is-taken"><div class="pos">index 3</div><div class="value">"three"</div></div>
+        <div class="slice-cell is-taken"><div class="pos">index 4</div><div class="value">"four"</div></div>
+        <div class="slice-cell is-taken"><div class="pos">index 5</div><div class="value">"five"</div></div>
+        <div class="slice-cell is-stop"><div class="pos">index 6 · stop</div><div class="value">"six"</div></div>
+        <div class="slice-cell"><div class="pos">index 7</div><div class="value">"seven"</div></div>
+        <div class="slice-cell"><div class="pos">index 8</div><div class="value">"eight"</div></div>
+        <div class="slice-cell"><div class="pos">index 9</div><div class="value">"nine"</div></div>
+      </div>
+      <div class="slice-key"><span><i class="key-line" aria-hidden="true"></i>Solid line and shaded cells: included</span><span><i class="key-line key-line--stop" aria-hidden="true"></i>Dashed line: stopping boundary, excluded</span></div>
+      <p class="scroll-note">On a narrow screen, scroll this index map sideways.</p>
+    </div>
+    <div class="result-strip"><p><strong>Result:</strong> <code>["two", "three", "four", "five"]</code></p></div>
+    <div class="callout callout--amber"><p><strong>The reliable question:</strong> “Where do I begin taking items, and before which index must I stop?”</p></div>
+  </section>
+
+  <section class="lesson" id="bounds">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">Let Python supply a boundary</p><h2>Omit the start or the stop</h2></div></div>
+    <p>A blank side of the colon means “use the natural boundary of the list.” The colon remains in place because it still separates the start instruction from the stop instruction.</p>
+    <ul class="checklist">
+      <li><span>2:6</span><p><strong>TAKE 2, 3, 4, 5 │ STOP BEFORE 6</strong><br>Index 2 is included. Index 6 is not.</p></li>
+      <li><span>:4</span><p><strong>TAKE 0, 1, 2, 3 │ STOP BEFORE 4</strong><br>Python supplies index 0 as the starting boundary.</p></li>
+      <li><span>5:</span><p><strong>TAKE 5, 6, 7, 8, 9 │ THEN END</strong><br>Index 5 is included. Python supplies the end of this list as the stopping boundary.</p></li>
+      <li><span>:</span><p><strong>Nothing is written; nothing is lost.</strong><br>The blank side tells Python to use the list’s beginning or end.</p></li>
+    </ul>
+    <div class="two">
+      <article class="card"><p class="card-label">No start written</p><h3>Begin at the beginning</h3><div class="code-block"><code>numbers[:4]</code></div><p>Take indexes <code>0</code> to <code>3</code>. Stop before index <code>4</code>.</p><p><strong>Result:</strong> <code>["zero", "one", "two", "three"]</code></p></article>
+      <article class="card"><p class="card-label">No stop written</p><h3>Continue to the end</h3><div class="code-block"><code>numbers[5:]</code></div><p>Begin at index <code>5</code> and include every remaining item.</p><p><strong>Result:</strong> <code>["five", "six", "seven", "eight", "nine"]</code></p></article>
+    </div>
+    <div class="callout"><p><strong>Do not read a blank as “nothing.”</strong> Before the colon, a blank means “from the beginning.” After the colon, a blank means “to the end.” Remember that <code>5:</code> includes the item at index <code>5</code>: it means “from 5 onward,” not “strictly after 5.”</p></div>
+  </section>
+
+  <section class="lesson" id="negative">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Use the nearest end</p><h2>Slice with negative indexes</h2></div></div>
+    <p>Negative indexes count backwards from the end: <code>-1</code> is the final item, <code>-2</code> is the second-to-last, and so on.</p>
+    <div class="operation">
+      <div><p class="card-label">Instruction</p><h3>Start fourth-to-last</h3><code class="syntax">numbers[-4:-1]</code></div>
+      <div class="arrow">→</div>
+      <div><p class="card-label">Result</p><h3>Stop before the final item</h3><code class="syntax">["six", "seven", "eight"]</code></div>
+    </div>
+    <p>The stop rule has not changed. Index <code>-1</code> is the stopping boundary, so <code>"nine"</code> is excluded.</p>
+    <div class="callout callout--amber"><p><strong>Practical shortcut:</strong> when you want the last few items, a slice such as <code>messages[-5:]</code> is often easier than calculating a positive start index.</p></div>
+  </section>
+
+  <section class="lesson" id="step">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Control the movement</p><h2>Add a step—or reverse direction</h2></div></div>
+    <p>The optional third instruction is the <strong>step</strong>, also called the <strong>stride</strong>. It says how far Python moves between selected items.</p>
+    <div class="callout">
+      <p><strong>Why does “the whole list in steps of two” use two colons?</strong></p>
+      <p>The full pattern has three instruction slots: <code>[start : stop : step]</code>. The colons are separators that keep those slots in the correct order.</p>
+      <div class="code-block"><code>pattern:
+[START:STOP:STEP]
+
+example:
+[blank:blank:2]
+
+<span class="code-comment">start blank → beginning</span>
+<span class="code-comment">stop blank  → end</span>
+<span class="code-comment">step 2      → jump two</span></code></div>
+      <p>With the spaces removed, <code>[ : : 2 ]</code> becomes <code>[::2]</code>. The two colons preserve the blank start and blank stop slots so that <code>2</code> is understood as the step.</p>
+    </div>
+    <div class="result-strip">
+      <p><strong>Whole-list trace:</strong> <code>numbers[::2]</code> → TAKE indexes <code>0, 2, 4, 6, 8</code></p>
+    </div>
+    <div class="syntax-parts">
+      <div><p class="card-label">Start</p><strong>2</strong><p>Begin by taking index 2.</p></div>
+      <div><p class="card-label">Stop</p><strong>8</strong><p>Finish before index 8.</p></div>
+      <div><p class="card-label">Step</p><strong>2</strong><p>Move two indexes each time.</p></div>
+    </div>
+    <div class="code-block"><code>numbers[2:8:2]
+<span class="code-comment"># indexes taken: 2, 4, 6</span>
+<span class="code-comment"># result: ["two", "four", "six"]</span></code></div>
+    <div class="two">
+      <article class="card"><span class="mode-tag">Retrieve</span><p class="card-label">Every second item</p><h3>Leave both bounds blank</h3><div class="code-block"><code>numbers[::2]</code></div><p>Begin at the start, continue to the end and move two places each time.</p><div class="output"><strong>Python returns</strong><code>["zero", "two", "four", "six", "eight"]</code></div></article>
+      <article class="card card--dark"><span class="mode-tag">Retrieve</span><p class="card-label">Reverse the list</p><h3>Move backwards by one</h3><div class="code-block"><code>numbers[::-1]</code></div><p>A step of <code>-1</code> changes the direction.</p><div class="output"><strong>Python returns</strong><code>["nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "zero"]</code></div></article>
+    </div>
+    <div class="callout"><p><strong>Read three-part slices in this order:</strong> start, stop, step. The second colon is needed even when start and stop are blank.</p></div>
+  </section>
+
+  <section class="lesson" id="modify">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">Use a slice as a destination</p><h2>Replace several items together</h2></div></div>
+    <p><span class="mode-tag mode-tag--change">Change the list</span></p>
+    <p>So far, a slice has appeared on its own to retrieve values. Put a slice on the left of <code>=</code> and it becomes the section Python must replace.</p>
+    <div class="operation operation--labelled">
+      <div><p class="card-label">Before · original state</p><h3>Indexes 1, 2 and 3 contain words</h3><code class="syntax">["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]</code></div>
+      <div class="operation-label"><code>numbers[1:4] = [20, 30, 40]</code></div>
+      <div><p class="card-label">After · changed state</p><h3>Those three positions contain integers</h3><code class="syntax">["zero", 20, 30, 40, "four", "five", "six", "seven", "eight", "nine"]</code></div>
+    </div>
+    <div class="result-strip"><p><strong>The assignment itself prints nothing.</strong> Print <code>numbers</code> afterwards to see the changed state shown above.</p></div>
+    <div class="callout callout--amber"><p><strong>For this lesson’s predictable pattern:</strong> replace the selected positions with the same number of new values. Python can resize a list through slice assignment, but that wider behaviour is not required here.</p></div>
+  </section>
+
+  <section class="lesson" id="range">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">Two similar-looking requests behave differently</p><h2>Indexing can fail; slicing clips safely</h2></div></div>
+    <p>The example below contains five items, so its valid positive indexes are <code>0</code> to <code>4</code>.</p>
+    <div class="code-block"><code>my_list = [<span class="code-num">1</span>, <span class="code-num">2</span>, <span class="code-num">3</span>, <span class="code-num">4</span>, <span class="code-num">5</span>]</code></div>
+    <div class="two">
+      <article class="card"><p class="card-label">Direct indexing</p><h3>One missing position is an error</h3><div class="code-block"><code>my_list[100]</code></div><p>Python raises <code>IndexError</code> because there is no single item at index 100.</p></article>
+      <article class="card card--dark"><p class="card-label">Slicing</p><h3>An oversized stop is clipped</h3><div class="code-block"><code>my_list[3:100]</code></div><p>Python returns the available section: <code>[4, 5]</code>. It does not raise an error.</p></article>
+    </div>
+    <div class="callout"><p><strong>Why?</strong> Indexing promises one exact item. Slicing asks for whatever portion exists inside a range.</p></div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Apply every lesson move</p><h2>Weekly temperature practice</h2></div></div>
+    <p>This is the Code Institute lesson’s practice setting. The data changes here deliberately: it tests whether you can transfer the same slicing rules to a new list.</p>
+    <div class="practice">
+      <div><p class="card-label">Monday to Sunday</p><div class="code-block"><code>week_temps = [
+    <span class="code-num">21</span>, <span class="code-num">22</span>, <span class="code-num">20</span>, <span class="code-num">19</span>,
+    <span class="code-num">24</span>, <span class="code-num">23</span>, <span class="code-num">22</span>
+]</code></div><p>Before writing each slice, mark the start, stop and step you need.</p></div>
+      <div><p class="card-label">Part A · retrieve</p><h3>Predict and write</h3><ol><li>Tuesday to Thursday.</li><li>The weekend using negative indexing.</li><li>Sunday back to Monday.</li><li>Every second day, beginning Monday.</li></ol><div class="answer-lines"><span></span><span></span><span></span><span></span></div></div>
+    </div>
+    <div class="callout callout--amber"><p><strong>Part B · modify:</strong> replace Thursday and Friday with <code>18</code> and <code>25</code>, then print the updated list.</p></div>
+    <details class="answer-check">
+      <summary>Check Part A after attempting all four slices</summary>
+      <div>
+        <ol>
+          <li><code>week_temps[1:4]</code> → <code>[22, 20, 19]</code></li>
+          <li><code>week_temps[-2:]</code> → <code>[23, 22]</code></li>
+          <li><code>week_temps[::-1]</code> → <code>[22, 23, 24, 19, 20, 22, 21]</code></li>
+          <li><code>week_temps[::2]</code> → <code>[21, 20, 24, 22]</code></li>
+        </ol>
+      </div>
+    </details>
+    <div class="callout"><p><strong>Part C · diagnose:</strong> a learner writes <code>week_temps[-2:-1]</code> for the whole weekend but receives only <code>[23]</code>. What boundary mistake have they made, and what slice retrieves both weekend values?</p></div>
+    <details class="answer-check">
+      <summary>Check Part C after diagnosing the weekend slice</summary>
+      <div>
+        <p><code>-1</code> is an excluded stop boundary, so <code>[-2:-1]</code> takes Saturday but stops before Sunday.</p>
+        <p><strong>Correction:</strong> <code>week_temps[-2:]</code> leaves the stop blank, so Python continues to the end and returns <code>[23, 22]</code>.</p>
+      </div>
+    </details>
+    <details class="answer-check">
+      <summary>Check Part B after attempting the replacement</summary>
+      <div>
+        <div class="code-block"><code>week_temps[3:5] = [<span class="code-num">18</span>, <span class="code-num">25</span>]
+print(week_temps)</code></div>
+        <p><strong>Updated list:</strong> <code>[21, 22, 20, 18, 25, 23, 22]</code></p>
+        <p>The slice starts at Thursday’s index <code>3</code> and stops before Saturday’s index <code>5</code>, so Thursday and Friday are the two positions replaced.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="lesson" id="traps">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">Debug the instruction</p><h2>Common slicing traps</h2></div></div>
+    <div class="diagnostic-grid">
+      <article class="diagnostic"><h3>Stop accidentally included</h3><span class="wrong">numbers[2:6] → expected "six" too</span><span class="actual">Actual: ["two", "three", "four", "five"]</span><p>The stop boundary is excluded. Use <code>[2:7]</code> if index <code>6</code> must be included.</p></article>
+      <article class="diagnostic"><h3>Weekend loses Sunday</h3><span class="wrong">week_temps[-2:-1]</span><span class="actual">Actual: [23]</span><p>The slice stops before index <code>-1</code>. Leave the stop blank: <code>week_temps[-2:]</code>.</p></article>
+      <article class="diagnostic"><h3>One colon cannot hold a step</h3><span class="wrong">numbers[:2] → expected every second item</span><span class="actual">Actual: ["zero", "one"]</span><p>With one colon, <code>2</code> occupies the stop slot. Use <code>[::2]</code> to place it in the step slot.</p></article>
+      <article class="diagnostic"><h3>Reading mistaken for changing</h3><span class="wrong">numbers[1:4]</span><span class="actual">Actual: returns a new section; numbers is unchanged</span><p>Retrieval has no assignment. To mutate, put the slice left of <code>=</code> and supply replacement values.</p></article>
+    </div>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">10</p><div><p class="eyebrow">Before moving on</p><h2>Quick recall</h2></div></div>
+    <ol>
+      <li>In <code>list[start:stop:step]</code>, which boundary is included and which is excluded?</li>
+      <li>What do blank start and stop slots mean in <code>numbers[::2]</code>?</li>
+      <li>Why does <code>numbers[::-1]</code> reverse the list?</li>
+      <li>What visible syntax distinguishes retrieving a slice from replacing it?</li>
+      <li>Why can <code>my_list[3:100]</code> succeed when <code>my_list[100]</code> fails?</li>
+    </ol>
+    <details class="answer-check">
+      <summary>Reveal the quick-recall answers</summary>
+      <div><ol>
+        <li>The start is included; the stop is excluded.</li>
+        <li>Blank start means the beginning, blank stop means the end, and step <code>2</code> selects every second item.</li>
+        <li>The blank bounds select the whole list and step <code>-1</code> moves backwards one position at a time.</li>
+        <li>A slice on its own retrieves. A slice on the left of <code>=</code> mutates the list.</li>
+        <li>Indexing demands one exact position; slicing returns the available portion inside a range.</li>
+      </ol></div>
+    </details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> mark a starting boundary, mark an excluded stopping boundary, then decide whether Python moves one place at a time or follows a different step.</p></div>
+    <div class="future-note"><p class="card-label">Not in this lesson · coming later</p><h3>Slicing applies beyond lists</h3><p>Other Python sequences can use related slicing ideas. This page stays with lists because that is the scope of the current Code Institute lesson.</p></div>
+  </section>
+
+  <footer>
+    <div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “List Slicing” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067828. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div>
+    <a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a>
+  </footer>
+</main>
+</body>
+</html>

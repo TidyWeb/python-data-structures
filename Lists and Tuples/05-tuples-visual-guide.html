@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Tuples — Fixed Collections</title>
+  <link rel="stylesheet" href="../assets/lesson-guide.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to lesson</a>
+
+<aside class="rail" aria-label="Lesson navigation">
+  <div class="brand">
+    <a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">( · )</a>
+    <div><p class="eyebrow">Collection · Data structures</p><p class="brand-name">Lesson 05 · Tuples</p></div>
+  </div>
+  <nav class="section-nav" aria-label="Sections in Lesson 05">
+    <ol>
+      <li><a href="#purpose"><span>01</span> Why tuples?</a></li>
+      <li><a href="#anatomy"><span>02</span> Tuple punctuation</a></li>
+      <li><a href="#access"><span>03</span> Read by index</a></li>
+      <li><a href="#immutable"><span>04</span> Try to change it</a></li>
+      <li><a href="#error"><span>05</span> Decode TypeError</a></li>
+      <li><a href="#uses"><span>06</span> Fixed-data uses</a></li>
+      <li><a href="#count"><span>07</span> Count a value</a></li>
+      <li><a href="#index"><span>08</span> Find a position</a></li>
+      <li><a href="#missing"><span>09</span> Methods not available</a></li>
+      <li><a href="#practice"><span>10</span> Weather exercise</a></li>
+      <li><a href="#recall"><span>11</span> Quick recall</a></li>
+    </ol>
+  </nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html" aria-current="page"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note">
+    <p><strong>This page covers tuples.</strong></p>
+    <p>Its foundation is the difference between a collection designed to change and one designed to remain fixed.</p>
+  </div>
+</aside>
+
+<main id="content">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Python data structures · visual revision guide</p>
+      <h1>Keep a collection <em>fixed.</em></h1>
+      <p class="lede">A tuple stores several ordered values, much like a list. Its defining promise is different: after the tuple is created, its items cannot be replaced, added or removed.</p>
+    </div>
+    <div class="hero-index"><strong>1</strong><span>defining difference</span></div>
+  </header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the decision</p><h2>Will this collection need to change?</h2></div></div>
+    <p class="thesis">A list is designed to change. A tuple is designed to remain fixed.</p>
+    <div class="versus">
+      <article>
+        <span class="mode-tag mode-tag--change">List · changeable</span>
+        <h3>Use square brackets</h3>
+        <code class="syntax">fruit = ["apple", "banana", "cherry"]</code>
+        <p>Items can later be replaced, added or removed.</p>
+      </article>
+      <article>
+        <span class="mode-tag">Tuple · fixed</span>
+        <h3>Use parentheses</h3>
+        <code class="syntax">fruit = ("apple", "banana", "cherry")</code>
+        <p>The three stored items remain the same after creation.</p>
+      </article>
+    </div>
+    <div class="callout"><p><strong>Immutable</strong> means “cannot be changed after creation.” A tuple is an immutable collection.</p></div>
+  </section>
+
+  <section class="lesson" id="anatomy">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">Read the punctuation</p><h2>The anatomy of a tuple</h2></div></div>
+    <p>The LMS lesson distinguishes tuples from lists through their outer punctuation. Parentheses surround the tuple; commas separate its items.</p>
+    <div class="anatomy">
+      <div><p class="card-label">( parentheses )</p><h3>Mark the fixed collection</h3><code class="syntax">fruit = ( ... )</code></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div><p class="card-label">, commas</p><h3>Separate one item from the next</h3><code class="syntax">"apple", "banana", "cherry"</code></div>
+    </div>
+    <div class="code-block"><code>fruit = (
+    <span class="code-string">"apple"</span>,
+    <span class="code-string">"banana"</span>,
+    <span class="code-string">"cherry"</span>
+)
+print(fruit)</code></div>
+    <div class="output"><strong>Printed output</strong><code>('apple', 'banana', 'cherry')</code></div>
+    <div class="callout callout--amber"><p><strong>Notice the real output:</strong> Python prints the tuple with parentheses. That unfamiliar shape confirms that Python has stored a tuple rather than a list.</p></div>
+  </section>
+
+  <section class="lesson" id="access">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">A familiar operation still works</p><h2>Read an item by its index</h2></div></div>
+    <p>Tuples are ordered and zero-indexed, just like lists. The first item is at index <code>0</code>, so the third item is at index <code>2</code>.</p>
+    <div class="three">
+      <article class="card"><p class="card-label">Index 0 · index -3</p><h3><code>"apple"</code></h3><p>The first item from the beginning.</p></article>
+      <article class="card"><p class="card-label">Index 1 · index -2</p><h3><code>"banana"</code></h3><p>The second item from the beginning.</p></article>
+      <article class="card"><p class="card-label">Index 2 · index -1</p><h3><code>"cherry"</code></h3><p>The third and final item.</p></article>
+    </div>
+    <div class="code-block"><code>print(fruit[<span class="code-num">2</span>])</code></div>
+    <div class="output"><strong>Printed output</strong><code>cherry</code></div>
+    <div class="callout"><p><strong>Reading is allowed.</strong> Immutability prevents changing the stored items; it does not prevent looking at them.</p></div>
+  </section>
+
+  <section class="lesson" id="immutable">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Test the defining rule</p><h2>Try to replace one item</h2></div></div>
+    <p>The line below would replace an item successfully in a list. With a tuple, Python refuses the assignment.</p>
+    <div class="code-block"><code>fruit[<span class="code-num">1</span>] = <span class="code-string">"orange"</span></code></div>
+    <div class="output"><strong>Python raises</strong><code>TypeError: 'tuple' object does not support item assignment</code></div>
+    <div class="state-line"><p><strong>The tuple remains unchanged:</strong> <code>('apple', 'banana', 'cherry')</code></p></div>
+    <div class="callout"><p><strong>This failure is the proof.</strong> Python found index <code>1</code>, but the tuple does not permit a new value to be stored there.</p></div>
+  </section>
+
+  <section class="lesson" id="error">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Let the error teach you</p><h2>Translate the <code>TypeError</code></h2></div></div>
+    <p>The message looks technical, but it names the exact rule that was broken.</p>
+    <div class="three">
+      <article class="card"><p class="card-label">TypeError</p><h3>The operation does not fit this data type</h3><p>Python is not saying the tuple disappeared. It is saying this attempted kind of operation is invalid for a tuple.</p></article>
+      <article class="card"><p class="card-label">'tuple' object</p><h3>The object Python inspected</h3><p>The quotation marks are part of Python’s error representation. They identify the type as <code>tuple</code>.</p></article>
+      <article class="card"><p class="card-label">does not support item assignment</p><h3>An item cannot receive a replacement</h3><p>Assignment means trying to store a new value at an indexed position.</p></article>
+    </div>
+    <div class="callout callout--amber"><p><strong>Plain-English translation:</strong> “You tried to replace one item, but this collection is a tuple and tuples do not allow that change.”</p></div>
+  </section>
+
+  <section class="lesson" id="uses">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">Match the structure to the job</p><h2>Use a tuple for fixed data</h2></div></div>
+    <div class="three">
+      <article class="card"><p class="card-label">Calendar facts</p><h3>Days of the week</h3><p>The expected set and order of weekday names should not be accidentally altered.</p></article>
+      <article class="card"><p class="card-label">Position facts</p><h3>Fixed coordinates</h3><p>A coordinate can travel through a program as one ordered pair whose values are meant to stay together.</p></article>
+      <article class="card"><p class="card-label">Recorded facts</p><h3>Measurements already taken</h3><p>Historical readings may need to be inspected without being rewritten accidentally.</p></article>
+    </div>
+    <div class="callout"><p><strong>The useful question is not “Are tuples better?”</strong> Ask: “Should this particular collection be allowed to change?”</p></div>
+    <div class="future-note"><p class="card-label">A smaller advantage</p><h3>Tuples can also be slightly faster</h3><p>The LMS notes a small performance benefit. For this lesson, the important reason to choose a tuple is clearer intent and protection from accidental modification.</p></div>
+  </section>
+
+  <section class="lesson" id="count">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">Ask about repetition</p><h2>Count matching values with <code>.count()</code></h2></div></div>
+    <p><code>.count(value)</code> returns how many times that value occurs. It reads the tuple and leaves it unchanged.</p>
+    <div class="code-block"><code>temperatures = (<span class="code-num">25</span>, <span class="code-num">28</span>, <span class="code-num">32</span>, <span class="code-num">33</span>, <span class="code-num">32</span>, <span class="code-num">17</span>, <span class="code-num">15</span>)
+print(temperatures.count(<span class="code-num">32</span>))</code></div>
+    <div class="output"><strong>Printed output</strong><code><span class="code-num">2</span></code></div>
+    <div class="callout"><p><strong>Why <code>2</code>?</strong> The temperature <code>32</code> appears twice: once at index <code>2</code> and once at index <code>4</code>.</p></div>
+  </section>
+
+  <section class="lesson" id="index">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Ask about location</p><h2>Find the first position with <code>.index()</code></h2></div></div>
+    <p><code>.index(value)</code> returns the zero-based index of the first matching value. It returns a position, not the value itself.</p>
+    <div class="code-block"><code>print(temperatures.index(<span class="code-num">17</span>))</code></div>
+    <div class="output"><strong>Printed output</strong><code><span class="code-num">5</span></code></div>
+    <div class="callout"><p><strong>Human position versus Python index:</strong> <code>17</code> is the sixth stored temperature, so its zero-based index is <code>5</code>.</p></div>
+  </section>
+
+  <section class="lesson" id="missing">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">The missing methods express the rule</p><h2>Tuple methods do not change items</h2></div></div>
+    <div class="catalogue-wrap">
+      <table class="catalogue">
+        <thead><tr><th>Operation</th><th>Available for a tuple?</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td><code>.count(value)</code></td><td>Yes</td><td>It only reports how many matches exist.</td></tr>
+          <tr><td><code>.index(value)</code></td><td>Yes</td><td>It only reports the first matching position.</td></tr>
+          <tr><td><code>.append(value)</code></td><td>No</td><td>Appending would add an item and change the tuple.</td></tr>
+          <tr><td><code>.remove(value)</code></td><td>No</td><td>Removing would change which items are stored.</td></tr>
+          <tr><td><code>.pop()</code></td><td>No</td><td>Popping would remove and return an item.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><p><strong>The pattern:</strong> tuple methods may inspect the fixed collection. Methods whose job is to modify a collection do not exist for tuples.</p></div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">10</p><div><p class="eyebrow">Use the LMS weather scenario</p><h2>Track one week of high temperatures</h2></div></div>
+    <p>The readings are treated as a completed historical record. That is why the exercise uses a tuple rather than a list.</p>
+    <div class="practice">
+      <div>
+        <p class="card-label">Starting information</p>
+        <h3>Seven daily highs in °C</h3>
+        <code class="syntax">(25, 28, 32, 33, 32, 17, 15)</code>
+        <p>Each number is an integer, so it needs no quotation marks.</p>
+      </div>
+      <div>
+        <p class="card-label">Your four jobs</p>
+        <ol>
+          <li>Create the tuple.</li>
+          <li>Print the third day’s temperature.</li>
+          <li>Count how often <code>32</code> appears.</li>
+          <li>Find the index of <code>17</code>, then try to replace the fifth day with <code>20</code>.</li>
+        </ol>
+        <div class="answer-lines"><span></span><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <details class="answer-check">
+      <summary>Check the complete weather exercise</summary>
+      <div>
+        <div class="code-block"><code>temperatures = (<span class="code-num">25</span>, <span class="code-num">28</span>, <span class="code-num">32</span>, <span class="code-num">33</span>, <span class="code-num">32</span>, <span class="code-num">17</span>, <span class="code-num">15</span>)
+
+print(temperatures[<span class="code-num">2</span>])
+print(temperatures.count(<span class="code-num">32</span>))
+print(temperatures.index(<span class="code-num">17</span>))
+temperatures[<span class="code-num">4</span>] = <span class="code-num">20</span></code></div>
+        <div class="output"><strong>Printed output before the failed assignment</strong><code><span class="code-num">32</span><br><span class="code-num">2</span><br><span class="code-num">5</span></code><strong>Then Python raises</strong><code>TypeError: 'tuple' object does not support item assignment</code></div>
+        <p>The attempted fifth-day replacement fails, so the original tuple remains unchanged.</p>
+      </div>
+    </details>
+    <div class="callout"><p><strong>Transfer question:</strong> if these temperatures were forecasts that must be revised during the week, would a list or tuple better express that job?</p></div>
+    <details class="answer-check">
+      <summary>Reveal the transfer answer</summary>
+      <div><p>A <strong>list</strong> would better express revisable forecasts because its items may be changed. A tuple better expresses the completed record used in this exercise.</p></div>
+    </details>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">11</p><div><p class="eyebrow">Before moving on</p><h2>Quick recall</h2></div></div>
+    <ol>
+      <li>What does <strong>immutable</strong> mean?</li>
+      <li>Which outer punctuation distinguishes the lesson’s tuple examples from lists?</li>
+      <li>Can tuple items still be retrieved by index?</li>
+      <li>What does <code>.count(value)</code> return?</li>
+      <li>What does <code>.index(value)</code> return?</li>
+      <li>Why do tuples have no <code>.append()</code>, <code>.remove()</code> or <code>.pop()</code> methods?</li>
+    </ol>
+    <details class="answer-check">
+      <summary>Reveal the quick-recall answers</summary>
+      <div>
+        <ol>
+          <li>Immutable means the stored items cannot be changed after the collection is created.</li>
+          <li>Tuples use parentheses <code>()</code>; lists use square brackets <code>[]</code>.</li>
+          <li>Yes. Tuples are ordered and zero-indexed like lists.</li>
+          <li>It returns how many times the supplied value occurs.</li>
+          <li>It returns the zero-based index of the first matching value.</li>
+          <li>Those methods would modify the collection, which conflicts with tuple immutability.</li>
+        </ol>
+      </div>
+    </details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> a tuple does not prevent you from reading or inspecting its values. It prevents the collection itself from being rewritten.</p></div>
+  </section>
+
+  <footer>
+    <div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “Tuples” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067831. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div>
+    <a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a>
+  </footer>
+</main>
+</body>
+</html>

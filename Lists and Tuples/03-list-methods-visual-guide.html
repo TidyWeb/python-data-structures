@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A visual learner guide to Python list methods that add, insert, remove, sort and return values.">
+<title>Python List Methods — Change Lists and Return Values</title>
+<link rel="stylesheet" href="../assets/lesson-guide.css">
+<style>
+.method-line{display:flex;flex-wrap:wrap;gap:.55rem;margin:1.5rem 0}
+.method-line code{padding:.45rem .65rem;border:1px solid var(--line);color:var(--green);background:var(--panel);font:700 .85rem var(--mono)}
+.effect-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:2rem 0;padding:1px;background:var(--line)}
+.effect-grid>article{padding:1.4rem;background:var(--panel)}
+.effect-grid .effect-label{margin:0 0 .65rem;color:var(--coral);font:800 .69rem var(--mono);letter-spacing:.11em;text-transform:uppercase}
+@media(max-width:720px){.effect-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the guide</a>
+<aside class="rail" aria-label="Guide navigation">
+  <div class="brand"><a class="brand-mark brand-home" href="../index.html" aria-label="Introduction to Data Structures">.()</a><div><p class="eyebrow">Collection · Lists and Tuples</p><p class="brand-name">Lesson 03 · List Methods</p></div></div>
+  <nav class="section-nav" aria-label="Sections in Lesson 03"><ol>
+    <li><a href="#purpose"><span>01</span> Why methods?</a></li>
+    <li><a href="#anatomy"><span>02</span> Read the pattern</a></li>
+    <li><a href="#add"><span>03</span> Add and insert</a></li>
+    <li><a href="#remove"><span>04</span> Remove by value</a></li>
+    <li><a href="#sort"><span>05</span> Sort in place</a></li>
+    <li><a href="#pop"><span>06</span> Pop and return</a></li>
+    <li><a href="#catalogue"><span>07</span> Method map</a></li>
+    <li><a href="#practice"><span>08</span> Store inventory</a></li>
+    <li><a href="#traps"><span>09</span> Common traps</a></li>
+    <li><a href="#recall"><span>10</span> Quick recall</a></li>
+  </ol></nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="../index.html"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="03-list-methods-visual-guide.html" aria-current="page"><span>03</span> List methods</a></li>
+      <li><a href="04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note"><p><strong>This page covers list methods</strong></p><p>It builds on creating, indexing and slicing lists.</p></div>
+</aside>
+
+<main id="main">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Python collections · Visual revision guide</p>
+      <h1>Ask the list<br><em>to do a job.</em></h1>
+      <p class="lede">A list method is a built-in operation connected to a particular list with a dot. Some methods change that list. Some return information. One important method—<code>.pop()</code>—does both.</p>
+      <div class="method-line" aria-label="Five actively practised list methods"><code>.append()</code><code>.insert()</code><code>.remove()</code><code>.sort()</code><code>.pop()</code></div>
+    </div>
+    <div class="hero-index"><strong>5</strong><span>active methods</span></div>
+  </header>
+
+  <section class="lesson" id="purpose">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Start with the changing world</p><h2>Why do lists need methods?</h2></div></div>
+    <p class="thesis">Real collections do not stay frozen. New items arrive, old items disappear, order changes, and programs need information about what is stored.</p>
+    <div class="two">
+      <article class="card"><p class="card-label">The collection</p><h3>A fruit display changes</h3><div class="code-block"><code>fruits = [
+    <span class="code-string">"banana"</span>,
+    <span class="code-string">"apple"</span>,
+    <span class="code-string">"cherry"</span>,
+    <span class="code-string">"strawberry"</span>,
+    <span class="code-string">"cherry"</span>
+]</code></div><p>The same five-item starting list runs through Sections 01–06.</p></article>
+      <article class="card card--dark"><p class="card-label">The jobs</p><h3>Manage the collection</h3><ul><li>Add a new fruit.</li><li>Remove one matching fruit.</li><li>Put the fruits in order.</li><li>Take an item out and keep hold of it.</li></ul></article>
+    </div>
+    <div class="callout"><p><strong>Plain-English definition:</strong> a method is an operation that belongs to an object. A list method tells one particular list to perform a list-related job.</p></div>
+  </section>
+
+  <section class="lesson" id="anatomy">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">Read left to right</p><h2>Object, dot, method, arguments</h2></div></div>
+    <p>The punctuation describes who performs the job, which job it performs and what information the job needs.</p>
+    <div class="anatomy">
+      <div><p class="card-label">Object</p><h3>Which list?</h3><code class="syntax">fruits</code></div>
+      <div class="arrow">·</div>
+      <div><p class="card-label">Method call</p><h3>Which job and input?</h3><code class="syntax">remove("cherry")</code></div>
+    </div>
+    <div class="three">
+      <article class="card"><p class="card-label">The dot ·</p><h3>Connects object to operation</h3><p><code>fruits.</code> means “ask the <code>fruits</code> list to…”</p></article>
+      <article class="card"><p class="card-label">The method name</p><h3>Names the job</h3><p><code>remove</code> tells Python which list operation to perform.</p></article>
+      <article class="card"><p class="card-label">Parentheses ( )</p><h3>Call the method</h3><p>Values inside them are <strong>arguments</strong>: information the method needs.</p></article>
+    </div>
+    <div class="callout callout--amber"><p><strong>Empty parentheses still matter.</strong> <code>fruits.sort()</code> needs no extra input, but <code>()</code> still calls the method.</p></div>
+  </section>
+
+  <section class="lesson" id="add">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">Two different destinations</p><h2>Add at the end or insert at an index</h2></div></div>
+    <div class="two">
+      <article class="card"><span class="mode-tag mode-tag--change">Change · append</span><p class="card-label">Append · one argument</p><h3>Add one item at the end</h3><div class="code-block"><code>fruits.append(<span class="code-string">"blueberry"</span>)</code></div><p><code>.append(item)</code> always places the new item after the current final item.</p><div class="output"><strong>If applied to the starting list</strong><code>["banana", "apple", "cherry", "strawberry", "cherry", "blueberry"]</code></div></article>
+      <article class="card card--dark"><span class="mode-tag mode-tag--change">Change · insert</span><p class="card-label">Insert · two arguments</p><h3>Add one item at a position</h3><div class="code-block"><code>fruits.insert(
+    <span class="code-num">1</span>,
+    <span class="code-string">"blueberry"</span>
+)</code></div><p><code>.insert(index, item)</code> places the item at that index and shifts later items to the right.</p><div class="output"><strong>Continuing route after insertion</strong><code>["banana", "blueberry", "apple", "cherry", "strawberry", "cherry"]</code></div></article>
+    </div>
+    <div class="callout"><p><strong>This lesson’s fruit route uses insertion:</strong> placing <code>"blueberry"</code> at index <code>1</code> puts it between <code>"banana"</code> and <code>"apple"</code>. Nothing is overwritten.</p></div>
+  </section>
+
+  <section class="lesson" id="remove">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Name the value, not its position</p><h2><code>.remove()</code> removes the first match</h2></div></div>
+    <p>After Section 03 inserts <code>"blueberry"</code>, the fruit list still contains two occurrences of <code>"cherry"</code>. The method removes only the first matching value.</p>
+    <p><span class="mode-tag mode-tag--change">Change the list</span></p>
+    <div class="operation operation--labelled">
+      <div><p class="card-label">Before · 6 items</p><h3>Blueberry inserted; two cherries remain</h3><code class="syntax">["banana", "blueberry", "apple", "cherry", "strawberry", "cherry"]</code></div>
+      <div class="operation-label"><code>fruits.remove("cherry")</code></div>
+      <div><p class="card-label">After · 5 items</p><h3>First match removed</h3><code class="syntax">["banana", "blueberry", "apple", "strawberry", "cherry"]</code></div>
+    </div>
+    <div class="callout callout--amber"><p><strong>Value versus index:</strong> <code>.remove("cherry")</code> searches for that value. It does not mean “remove the item at index <code>"cherry"</code>.”</p></div>
+    <div class="state-line"><p><strong>Current list:</strong> <code>["banana", "blueberry", "apple", "strawberry", "cherry"]</code></p></div>
+  </section>
+
+  <section class="lesson" id="sort">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Reorder the existing list</p><h2><code>.sort()</code> changes the list in place</h2></div></div>
+    <p><strong>In place</strong> means the existing list itself changes. Python does not leave the original order untouched.</p>
+    <p><span class="mode-tag mode-tag--change">Change the list</span></p>
+    <div class="operation operation--labelled">
+      <div><p class="card-label">Before sorting</p><h3>Insertion order</h3><code class="syntax">["banana", "blueberry", "apple", "strawberry", "cherry"]</code></div>
+      <div class="operation-label"><code>fruits.sort()</code></div>
+      <div><p class="card-label">After sorting</p><h3>Alphabetical ascending order</h3><code class="syntax">["apple", "banana", "blueberry", "cherry", "strawberry"]</code></div>
+    </div>
+    <div class="callout"><p><strong>For numbers, ascending means lowest to highest.</strong> For these lowercase words, it means alphabetical order.</p></div>
+  </section>
+
+  <section class="lesson" id="pop">
+    <div class="lesson-head"><p class="lesson-no">06</p><div><p class="eyebrow">The hybrid method</p><h2><code>.pop()</code> removes and returns</h2></div></div>
+    <p class="thesis">Most of the lesson’s methods are easiest to classify as changing the list or returning information. <code>.pop()</code> matters because it does both jobs.</p>
+    <p><span class="mode-tag mode-tag--both">Change + return</span></p>
+    <div class="code-block"><code>popped_fruit = fruits.pop()</code></div>
+    <div class="effect-grid">
+      <article><p class="effect-label">Effect 1 · changes the list</p><h3>The final item is removed</h3><p>Without an index, <code>.pop()</code> removes <code>"strawberry"</code>, the current last item.</p><code class="syntax">["apple", "banana", "blueberry", "cherry"]</code></article>
+      <article><p class="effect-label">Effect 2 · returns a value</p><h3>The removed item travels</h3><p>The returned value is assigned to <code>popped_fruit</code>, so it remains available after leaving the list.</p><code class="syntax">popped_fruit == "strawberry"</code></article>
+    </div>
+    <div class="two">
+      <article class="card"><p class="card-label">No index supplied</p><h3>Remove the final item</h3><div class="code-block"><code>colours = [<span class="code-string">"red"</span>, <span class="code-string">"blue"</span>, <span class="code-string">"green"</span>]
+removed = colours.pop()</code></div><div class="output"><strong>Visible effects</strong><code>removed == "green"<br>colours == ["red", "blue"]</code></div></article>
+      <article class="card card--dark"><p class="card-label">Index supplied</p><h3>Remove that position</h3><div class="code-block"><code>colours = [<span class="code-string">"red"</span>, <span class="code-string">"blue"</span>, <span class="code-string">"green"</span>]
+removed = colours.pop(<span class="code-num">1</span>)</code></div><div class="output"><strong>Visible effects</strong><code>removed == "blue"<br>colours == ["red", "green"]</code></div><p>Index <code>1</code> means the second item.</p></article>
+    </div>
+    <div class="callout callout--amber"><p><strong>Separate experiment:</strong> <code>fruits.pop(5)</code> raises <code>IndexError</code> when index <code>5</code> does not exist. This experiment is not applied to the continuing worked list.</p></div>
+  </section>
+
+  <section class="lesson" id="catalogue">
+    <div class="lesson-head"><p class="lesson-no">07</p><div><p class="eyebrow">Recognise, then look up</p><h2>A compact method map</h2></div></div>
+    <p>Code Institute says you do not need to memorise the whole catalogue. Learn the five active methods above; use this table to recognise the wider tools when you meet them.</p>
+    <div class="catalogue-wrap">
+      <table class="catalogue">
+        <thead><tr><th>Operation</th><th>Main job</th><th>Changes the list?</th><th>Returns useful information?</th></tr></thead>
+        <tbody>
+          <tr><td><code>.append(item)</code></td><td>Add one item at the end.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+          <tr><td><code>.extend(iterable)</code></td><td>Add several items from another iterable.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+          <tr><td><code>.insert(index, item)</code></td><td>Add one item at a chosen position.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+          <tr><td><code>.remove(item)</code></td><td>Remove the first matching value.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+          <tr><td><code>.pop(index)</code></td><td>Remove by position; final item if index is omitted.</td><td>Yes</td><td>Yes — the removed item</td></tr>
+          <tr><td><code>.index(item)</code></td><td>Find the first matching item’s index.</td><td>No</td><td>Yes — an index</td></tr>
+          <tr><td><code>.count(item)</code></td><td>Count matching values.</td><td>No</td><td>Yes — an integer</td></tr>
+          <tr><td><code>.sort()</code></td><td>Sort the existing list in ascending order.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+          <tr><td><code>.reverse()</code></td><td>Reverse the existing list’s order.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+          <tr><td><code>.clear()</code></td><td>Remove every item.</td><td>Yes</td><td>No — returns <code>None</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><p><strong>Three related tools are not list methods:</strong> <code>len(list)</code> is a built-in function; <code>"separator".join(list)</code> is a string method that combines strings; and <code>"text".split()</code> is a string method that returns a list.</p></div>
+  </section>
+
+  <section class="lesson" id="practice">
+    <div class="lesson-head"><p class="lesson-no">08</p><div><p class="eyebrow">Transfer the method choices</p><h2>Manage an online-store inventory</h2></div></div>
+    <p>This is the Code Institute lesson’s final scenario. The data changes deliberately from fruit strings to stock-count integers.</p>
+    <div class="practice">
+      <div><p class="card-label">Starting inventory</p><div class="code-block"><code>inventory = [
+    <span class="code-num">100</span>, <span class="code-num">50</span>, <span class="code-num">75</span>,
+    <span class="code-num">200</span>, <span class="code-num">50</span>, <span class="code-num">150</span>
+]</code></div><p>Square brackets define the list. These values are integers, so they do not use quotation marks.</p></div>
+      <div><p class="card-label">Your three jobs</p><h3>Choose one method for each instruction</h3><ol><li>Add new stock quantity <code>30</code> at the end.</li><li>Remove the first occurrence of quantity <code>50</code>.</li><li>Sort the stock quantities in ascending order.</li></ol><div class="answer-lines"><span></span><span></span><span></span></div></div>
+    </div>
+    <p><strong>Expected final output:</strong> <code>Updated inventory: [30, 50, 75, 100, 150, 200]</code></p>
+    <details class="answer-check">
+      <summary>Check the method choices after attempting all three jobs</summary>
+      <div>
+        <ol>
+          <li><code>inventory.append(30)</code> adds one new final item.</li>
+          <li><code>inventory.remove(50)</code> removes only the first matching <code>50</code>.</li>
+          <li><code>inventory.sort()</code> changes the existing list to ascending order.</li>
+        </ol>
+        <div class="code-block"><code>inventory = [<span class="code-num">100</span>, <span class="code-num">50</span>, <span class="code-num">75</span>, <span class="code-num">200</span>, <span class="code-num">50</span>, <span class="code-num">150</span>]
+
+inventory.append(<span class="code-num">30</span>)
+inventory.remove(<span class="code-num">50</span>)
+inventory.sort()
+
+print(<span class="code-string">"Updated inventory:"</span>, inventory)</code></div>
+        <p><strong>Final list:</strong> <code>[30, 50, 75, 100, 150, 200]</code></p>
+      </div>
+    </details>
+    <div class="callout"><p><strong>Transfer challenge:</strong> after sorting the inventory, remove the largest quantity with <code>.pop()</code> and store it in <code>largest_stock</code>. Then explain what changed and what was returned.</p></div>
+    <details class="answer-check">
+      <summary>Check the transfer challenge</summary>
+      <div>
+        <div class="code-block"><code>largest_stock = inventory.pop()</code></div>
+        <p><strong>Returned value:</strong> <code>largest_stock == 200</code></p>
+        <p><strong>Changed inventory:</strong> <code>[30, 50, 75, 100, 150]</code></p>
+        <p>Sorting placed the largest value last; <code>.pop()</code> removed that last item and returned it.</p>
+      </div>
+    </details>
+    <div class="callout callout--amber"><p><strong>Diagnosis:</strong> what goes wrong with <code>inventory = inventory.sort()</code>?</p></div>
+    <details class="answer-check">
+      <summary>Reveal the diagnosis</summary>
+      <div><p><code>.sort()</code> changes the existing list and returns <code>None</code>. Assigning that return value replaces the variable with <code>None</code>. Use <code>inventory.sort()</code> on its own, then print <code>inventory</code>.</p></div>
+    </details>
+  </section>
+
+  <section class="lesson" id="traps">
+    <div class="lesson-head"><p class="lesson-no">09</p><div><p class="eyebrow">Ask what the method targets</p><h2>Common method traps</h2></div></div>
+    <div class="diagnostic-grid">
+      <article class="diagnostic"><h3>Value confused with position</h3><span class="wrong">fruits.pop("cherry")</span><span class="actual">Actual: TypeError — the pop index must be an integer</span><p>Use <code>.remove("cherry")</code> for a value. Use <code>.pop(index)</code> for a position.</p></article>
+      <article class="diagnostic"><h3>Return value confused with the list</h3><span class="wrong">inventory = inventory.sort()</span><span class="actual">Actual: inventory becomes None</span><p><code>.sort()</code> mutates in place and returns <code>None</code>. Call it without assignment.</p></article>
+      <article class="diagnostic"><h3>Method named but not called</h3><span class="wrong">fruits.sort</span><span class="actual">Actual: the list remains unchanged</span><p>The parentheses perform the call: <code>fruits.sort()</code>.</p></article>
+      <article class="diagnostic"><h3>Missing target</h3><span class="wrong">fruits.remove("mango")</span><span class="actual">Actual: ValueError if "mango" is absent</span><p><code>.remove()</code> must find a matching value. For this lesson’s exercises, confirm that the requested value is visibly present first.</p></article>
+    </div>
+  </section>
+
+  <section class="lesson" id="recall">
+    <div class="lesson-head"><p class="lesson-no">10</p><div><p class="eyebrow">Before moving on</p><h2>Quick recall</h2></div></div>
+    <ol>
+      <li>What does the dot connect in <code>fruits.sort()</code>?</li>
+      <li>When would you choose <code>.append()</code> instead of <code>.insert()</code>?</li>
+      <li>Which method targets a value, and which method targets a position?</li>
+      <li>Why must <code>inventory.sort()</code> not be assigned back to <code>inventory</code>?</li>
+      <li>What two effects does <code>.pop()</code> have?</li>
+    </ol>
+    <details class="answer-check">
+      <summary>Reveal the quick-recall answers</summary>
+      <div><ol>
+        <li>The dot connects a particular list object to the method it must perform.</li>
+        <li>Use <code>.append()</code> for the end; use <code>.insert(index, item)</code> for a chosen position.</li>
+        <li><code>.remove(value)</code> targets a matching value; <code>.pop(index)</code> targets a position.</li>
+        <li><code>.sort()</code> changes the list in place and returns <code>None</code>.</li>
+        <li><code>.pop()</code> removes an item from the list and returns that removed value.</li>
+      </ol></div>
+    </details>
+    <div class="callout callout--amber"><p><strong>The durable mental model:</strong> before choosing a method, ask two questions: “Do I want to target a value or a position?” and “Should this operation change the list, return information, or do both?”</p></div>
+    <div class="future-note"><p class="card-label">Recognise now · deepen later</p><h3>The catalogue is a lookup tool</h3><p>You do not need to memorise every method today. Secure the five active methods, understand their effects, and return to the method map when a new list-management job appears.</p></div>
+  </section>
+
+  <footer>
+    <div><p><strong>Private learner revision guide.</strong> Informed by Code Institute’s “List Methods” lesson within <em>Python and Data Analysis Libraries</em>, lesson ID 537126, section ID 2067829. This independently reworded companion is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div>
+    <a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="../assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a>
+  </footer>
+</main>
+</body>
+</html>

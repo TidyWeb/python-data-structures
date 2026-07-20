@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An introduction to data structures connecting nine beginner lessons on Python lists, dictionaries, tuples, sets, nesting and containment.">
+  <title>Introduction to Data Structures</title>
+  <link rel="stylesheet" href="assets/lesson-guide.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to the map</a>
+<aside class="rail" aria-label="Introduction navigation">
+  <div class="brand"><span class="brand-mark" aria-hidden="true">{ }</span><div><p class="eyebrow">Collection · Data structures</p><p class="brand-name">Introduction to Data Structures</p></div></div>
+  <nav class="section-nav" aria-label="Sections in the introduction"><ol>
+    <li><a href="#symbols"><span>01</span> Symbol legend</a></li>
+    <li><a href="#introduction"><span>02</span> What this topic is</a></li>
+    <li><a href="#choose"><span>03</span> Choose a structure</a></li>
+    <li><a href="#connections"><span>04</span> How they connect</a></li>
+    <li><a href="#guides"><span>05</span> The nine lessons</a></li>
+  </ol></nav>
+  <nav class="course-nav" aria-label="Course chapters">
+    <p>Course chapters</p>
+    <ol>
+      <li><a href="index.html" aria-current="page"><span>00</span> Introduction to Data Structures</a></li>
+      <li><a href="Lists and Tuples/01-lists-visual-guide.html"><span>01</span> Lists</a></li>
+      <li><a href="Lists and Tuples/02-list-slicing-visual-guide.html"><span>02</span> List slicing</a></li>
+      <li><a href="Lists and Tuples/03-list-methods-visual-guide.html"><span>03</span> List methods</a></li>
+      <li><a href="Lists and Tuples/04-dictionaries-visual-guide.html"><span>04</span> Dictionaries</a></li>
+      <li><a href="Lists and Tuples/05-tuples-visual-guide.html"><span>05</span> Tuples</a></li>
+      <li><a href="Lists and Tuples/06-sets-visual-guide.html"><span>06</span> Sets</a></li>
+      <li><a href="Lists and Tuples/07-nested-lists-visual-guide.html"><span>07</span> Nested lists</a></li>
+      <li><a href="Lists and Tuples/08-nested-dictionaries-visual-guide.html"><span>08</span> Nested dictionaries</a></li>
+      <li><a href="Lists and Tuples/09-containment-in-operator-visual-guide.html"><span>09</span> Containment</a></li>
+    </ol>
+  </nav>
+  <div class="rail-note"><p><strong>Start here.</strong></p><p>This introduction shows the whole map before Lessons 01–09.</p></div>
+</aside>
+
+<main id="content">
+  <header class="hero">
+    <div><p class="eyebrow">Python data structures · visual map</p><h1 class="intro-title"><span>More than one value.</span><em>Four useful shapes.</em></h1><p class="lede">If variables, loops and print statements feel familiar, you are ready for this next step. Python gives you several ways to pack more than one value into a single container; which one you reach for depends on what you need it to do—and it becomes simpler once you can see the shapes.</p></div>
+    <div class="hero-index"><strong>00</strong><span>start before 01</span></div>
+  </header>
+
+  <section class="lesson" id="symbols">
+    <div class="lesson-head"><p class="lesson-no">01</p><div><p class="eyebrow">Recognise the destination</p><h2>Symbol legend</h2></div></div>
+    <div class="symbol-strip-wrap" role="region" aria-label="Nine lesson symbols in taught order. Scroll sideways on narrow screens." tabindex="0">
+      <div class="symbol-strip">
+        <a class="symbol-link" href="Lists and Tuples/01-lists-visual-guide.html"><span class="brand-mark" aria-hidden="true">[ ]</span><strong>Lists</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/02-list-slicing-visual-guide.html"><span class="brand-mark" aria-hidden="true">[ : ]</span><strong>List slicing</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/03-list-methods-visual-guide.html"><span class="brand-mark" aria-hidden="true">.()</span><strong>List methods</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/04-dictionaries-visual-guide.html"><span class="brand-mark" aria-hidden="true">{ : }</span><strong>Dictionaries</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/05-tuples-visual-guide.html"><span class="brand-mark" aria-hidden="true">( · )</span><strong>Tuples</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/06-sets-visual-guide.html"><span class="brand-mark" aria-hidden="true">{ · }</span><strong>Sets</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/07-nested-lists-visual-guide.html"><span class="brand-mark" aria-hidden="true">[[ ]]</span><strong>Nested lists</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/08-nested-dictionaries-visual-guide.html"><span class="brand-mark" aria-hidden="true">{{ : }}</span><strong>Nested dictionaries</strong></a>
+        <a class="symbol-link" href="Lists and Tuples/09-containment-in-operator-visual-guide.html"><span class="brand-mark" aria-hidden="true">in?</span><strong>Containment</strong></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lesson lesson-introduction" id="introduction">
+    <div class="lesson-head"><p class="lesson-no">02</p><div><p class="eyebrow">See the family resemblance</p><h2>One question. Four shapes.</h2></div></div>
+    <p class="thesis">A data structure is simply a shape for holding several values together. Every lesson in this collection comes back to the same question: how do I hold more than one value at once, and which shape fits the job? Lists, dictionaries, tuples and sets are the four shapes; the other five lessons cover slicing, methods, two kinds of nesting and containment.</p>
+  </section>
+
+  <section class="lesson" id="choose">
+    <div class="lesson-head"><p class="lesson-no">03</p><div><p class="eyebrow">Begin with the job</p><h2>Which structure do I need?</h2></div></div>
+    <p class="thesis">Read down the left edge to see whether the structure can change. Then read across the top to see whether order or position matters.</p>
+    <div class="choice-map-wrap" role="region" aria-label="Structure choice map. Scroll sideways on narrow screens." tabindex="0">
+      <div class="choice-map">
+        <div class="choice-corner">Can it change?</div>
+        <div class="choice-axis">Order or position matters</div>
+        <div class="choice-axis">Order is not the goal</div>
+
+        <div class="choice-row-label">Yes · can change</div>
+        <div class="choice-cell">
+          <a class="choice-entry" href="Lists and Tuples/01-lists-visual-guide.html"><span class="brand-mark" aria-hidden="true">[ ]</span><span><strong>List</strong><small>Keep an ordered sequence</small></span></a>
+          <a class="choice-entry" href="Lists and Tuples/04-dictionaries-visual-guide.html"><span class="brand-mark" aria-hidden="true">{ : }</span><span><strong>Dictionary</strong><small>Name every stored value</small></span></a>
+        </div>
+        <div class="choice-cell">
+          <a class="choice-entry" href="Lists and Tuples/06-sets-visual-guide.html"><span class="brand-mark" aria-hidden="true">{ · }</span><span><strong>Set</strong><small>Keep values unique</small></span></a>
+        </div>
+
+        <div class="choice-row-label">No · fixed after creation</div>
+        <div class="choice-cell">
+          <a class="choice-entry" href="Lists and Tuples/05-tuples-visual-guide.html"><span class="brand-mark" aria-hidden="true">( · )</span><span><strong>Tuple</strong><small>Protect an ordered sequence</small></span></a>
+        </div>
+        <div class="choice-cell choice-empty">
+          <span class="brand-mark" aria-hidden="true">—</span>
+          <span><strong>Not taught in this collection</strong><small><code>frozenset</code> fits here: unordered and fixed after creation.</small></span>
+        </div>
+      </div>
+    </div>
+    <p class="scroll-note">On a narrow screen, scroll the map sideways.</p>
+    <div class="callout"><p><strong>What stays off this map:</strong> slicing and methods operate on lists. Nesting adds another collection layer. Containment asks whether something is present. None is a fifth structure.</p></div>
+  </section>
+
+  <section class="lesson" id="connections">
+    <div class="lesson-head"><p class="lesson-no">04</p><div><p class="eyebrow">Follow one changing need</p><h2>How they connect</h2></div></div>
+    <p class="thesis">The shape changes when the job changes. Follow one shopping list as it needs names, protection, uniqueness, detail and finally a quick check.</p>
+    <div class="connection-story">
+      <article>
+        <p class="story-step">01 · Start with a list</p>
+        <h3>A group in order is enough</h3>
+        <code class="story-code">shopping = ["milk", "eggs", "bread"]</code>
+        <p>A plain list is enough when all you need is a group of items in order.</p>
+      </article>
+      <article>
+        <p class="story-step">02 · Add quantities</p>
+        <h3>The list reaches its limit</h3>
+        <code class="story-code">shopping = {"milk": 2, "eggs": 12, "bread": 1}</code>
+        <p>A list holds values; a dictionary names them.</p>
+      </article>
+      <article>
+        <p class="story-step">03 · Keep last week fixed</p>
+        <h3>The finished list should not change</h3>
+        <code class="story-code">last_week = ("milk", "eggs", "bread")</code>
+        <p>A tuple has the same ordered shape as a list, but it is locked.</p>
+      </article>
+      <article>
+        <p class="story-step">04 · Remove repeats</p>
+        <h3>Two weeks overlap</h3>
+        <code class="story-code">all_items = {"milk", "eggs", "bread", "cheese"}</code>
+        <p>A set combines the items while keeping only what is distinct.</p>
+      </article>
+      <article>
+        <p class="story-step">05 · Add detail inside detail</p>
+        <h3>Dinner needs its own list</h3>
+        <code class="story-code">shopping["dinner"] = ["pasta", "tomato sauce", "basil"]</code>
+        <p class="story-result"><strong>Result:</strong> the dictionary now holds a list under <code>"dinner"</code>.</p>
+        <p>Nesting is just one of these shapes holding another.</p>
+      </article>
+      <article>
+        <p class="story-step">06 · Check what is there</p>
+        <h3>Ask one yes-or-no question</h3>
+        <code class="story-code">"milk" in shopping</code>
+        <p class="story-result"><strong>Result:</strong> <code>True</code></p>
+        <p>Containment works across all four shapes. In a dictionary, plain <code>in</code> checks the keys.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="lesson" id="guides">
+    <div class="lesson-head"><p class="lesson-no">05</p><div><p class="eyebrow">Open the detail you need</p><h2>The nine lessons</h2></div></div>
+    <div class="guide-grid">
+      <a class="card guide-card" href="Lists and Tuples/01-lists-visual-guide.html"><span class="brand-mark" aria-hidden="true">[ ]</span><h3>01 · Lists</h3><p>How do I keep an ordered group that can change?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/02-list-slicing-visual-guide.html"><span class="brand-mark" aria-hidden="true">[ : ]</span><h3>02 · List slicing</h3><p>How do I take one part of a list?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/03-list-methods-visual-guide.html"><span class="brand-mark" aria-hidden="true">.()</span><h3>03 · List methods</h3><p>How do I add, remove, sort or count items?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/04-dictionaries-visual-guide.html"><span class="brand-mark" aria-hidden="true">{ : }</span><h3>04 · Dictionaries</h3><p>How do I retrieve stored values by name?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/05-tuples-visual-guide.html"><span class="brand-mark" aria-hidden="true">( · )</span><h3>05 · Tuples</h3><p>How do I protect an ordered group from change?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/06-sets-visual-guide.html"><span class="brand-mark" aria-hidden="true">{ · }</span><h3>06 · Sets</h3><p>How do I keep only unique values?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/07-nested-lists-visual-guide.html"><span class="brand-mark" aria-hidden="true">[[ ]]</span><h3>07 · Nested lists</h3><p>How do I follow lists inside lists?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/08-nested-dictionaries-visual-guide.html"><span class="brand-mark" aria-hidden="true">{{ : }}</span><h3>08 · Nested dictionaries</h3><p>How do I follow keys through layered data?</p></a>
+      <a class="card guide-card" href="Lists and Tuples/09-containment-in-operator-visual-guide.html"><span class="brand-mark" aria-hidden="true">in?</span><h3>09 · Containment</h3><p>How do I ask whether a value is present?</p></a>
+    </div>
+  </section>
+
+  <footer><div><p><strong>Private learner overview.</strong> This map connects nine independently reworded companion lessons informed by Code Institute’s Python data-structures lessons. It is not official Code Institute material.</p><p>Designed for local offline study · July 2026</p></div><a class="tidy" href="https://github.com/TidyWeb/" target="_blank" rel="noopener"><img src="assets/tidyweb_logo.png" alt="TidyWeb logo" width="44" height="44"><span>© 2026 TidyWeb · GitHub</span></a></footer>
+</main>
+</body>
+</html>
